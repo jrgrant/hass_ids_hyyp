@@ -4,7 +4,7 @@ Home Assistant integration for IDS Hyyp (Beta)
 **Requires version 2022.5 and newer**
 
 # To Install:
-
+0 ) DELETE THE OLD VERSION !!
 1) Add custom repository to HACS (https://github.com/hawky358/hass_ids_hyyp)
 2) Add Hyyp integration and configure via config flow.
 
