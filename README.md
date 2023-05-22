@@ -5,9 +5,16 @@ Home Assistant integration for IDS Hyyp (Beta)
 
 # To Install:
 
-1) Add custom repository to HACS (https://github.com/RenierM26/hass_ids_hyyp)
+1) Add custom repository to HACS (https://github.com/hawky358/hass_ids_hyyp)
 2) Add Hyyp integration and configure via config flow.
 
-Note:
+Changes from the original @RenierM26 version:
 
-The integration requires a stay profile on each partition at this moment.
+1) This is a fork of @francoistk 's version. 
+    - Fixed the requirement that a stay profile is required for every partitions
+
+2) Reverse engineered the pyHyypApi protobuf files and recompiled. (Created new package on pypi)
+3) Modified dependancies to point to new modified pyhyypapi package
+
+
+
