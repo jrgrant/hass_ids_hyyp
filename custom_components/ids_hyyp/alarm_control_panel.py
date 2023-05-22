@@ -1,7 +1,7 @@
 """Support for IDS Hyyp alarms."""
 from __future__ import annotations
 
-from pyhyypapi.exceptions import HTTPError, HyypApiError
+from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError
 
 from homeassistant.components.alarm_control_panel import (
     AlarmControlPanelEntity,

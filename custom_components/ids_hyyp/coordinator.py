@@ -4,8 +4,8 @@ import logging
 from typing import Any
 
 from async_timeout import timeout
-from pyhyypapi.client import HyypClient
-from pyhyypapi.exceptions import HTTPError, HyypApiError, InvalidURL
+from pyhyypapihawkmod.client import HyypClient
+from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError, InvalidURL
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed

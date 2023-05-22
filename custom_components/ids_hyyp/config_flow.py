@@ -4,9 +4,9 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from pyhyypapi.client import HyypClient
-from pyhyypapi.constants import DEFAULT_TIMEOUT
-from pyhyypapi.exceptions import HTTPError, HyypApiError, InvalidURL
+from pyhyypapihawkmod.client import HyypClient
+from pyhyypapihawkmod.constants import DEFAULT_TIMEOUT
+from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError, InvalidURL
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow

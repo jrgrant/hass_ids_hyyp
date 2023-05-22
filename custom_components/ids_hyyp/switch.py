@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pyhyypapi.exceptions import HTTPError, HyypApiError
+from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError
 import voluptuous as vol
 
 from homeassistant.components.switch import SwitchDeviceClass, SwitchEntity
