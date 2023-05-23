@@ -8,5 +8,5 @@
 		"switch"
     ],
     "iot_class": "Cloud Polling",
-    "homeassistant": "2022.5"
+    "homeassistant": "2023.4"
 }
