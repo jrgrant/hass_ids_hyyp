@@ -6,6 +6,7 @@ Home Assistant integration for IDS Hyyp (Beta)
 
 # To Install 
 **HACS Method**
+
 0) DELETE THE OLD VERSION! 
 1) Add custom repository to HACS (https://github.com/hawky358/hass_ids_hyyp)
 2) Download integration into HACS (+reboot)
@@ -18,7 +19,9 @@ Home Assistant integration for IDS Hyyp (Beta)
 
 
 
-**Main changes from the original @RenierM26 version:**
+
+
+# Main changes from the original @RenierM26 version:
 
 **Version 0.0.1.8**
 
