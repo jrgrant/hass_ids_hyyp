@@ -3,7 +3,7 @@
     "hacs": "1.6.0",
     "domains": [
 		"alarm_control_panel",
-		"binary_sensor"
+		"binary_sensor",
 		"sensor",
 		"switch"
     ],
