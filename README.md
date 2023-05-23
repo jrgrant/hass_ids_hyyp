@@ -7,17 +7,22 @@ Home Assistant integration for IDS Hyyp (Beta)
 # To Install 
 **HACS Method**
 
+https://www.youtube.com/watch?v=FGoE4XzUE38 (Typical installation and setup to get it running)
+
 0) DELETE THE OLD VERSION! 
 1) Add custom repository to HACS (https://github.com/hawky358/hass_ids_hyyp)
-2) Download integration into HACS (+reboot)
-3) Add Hyyp integration via HASS and configure via config flow.
+2) Download the integration using HACS 
+3) Restart Home Assistant
+4) Add Hyyp integration via Settings > Devices and Services and configure via config flow. 
+
+
 
 **SSH Method**
 
 0) DELETE THE OLD VERSION from /config/custom_components/
 1) Copy the ids_hyyp folder into /config/custom_components/
-
-
+2) Reboot
+3) Add Hyyp integration via Settings > Devices and Services and configure via config flow. (See later part of youtube video)
 
 
 
