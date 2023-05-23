@@ -1,7 +1,9 @@
-# hass_ids_hyyp
+# hass_ids_hyyp (hawkMod)
 Home Assistant integration for IDS Hyyp (Beta)
 
-**Requires version 2022.5 and newer**
+**Requires version 2023.4 and newer**
+
+
 
 # To Install:
 0) DELETE THE OLD VERSION !!
@@ -16,6 +18,7 @@ Changes from the original @RenierM26 version:
 2) Reverse engineered the pyHyypApi protobuf files and recompiled. (Created new package on pypi)
 3) Modified dependancies to point to new modified pyhyypapi package
 4) Changed name to IDS Hyyp (Beta)(hawkMod) to avoid potential conflicts with previous version
+5) Works with 2023.4 and higher.
 
 
 
