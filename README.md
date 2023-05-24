@@ -11,16 +11,9 @@ Support, updates, bugfixes, features, etc. will be limited*
 **HACS Method (https://hacs.xyz/docs/setup/download/)**
 
 
-<iframe
-    width="640"
-    height="480"
-    src="https://www.youtube.com/watch?v=FGoE4XzUE38"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen
->
-</iframe>
-
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=FGoE4XzUE38
+" target="_blank"><img src="http://img.youtube.com/vi/FGoE4XzUE38/0.jpg" 
+alt="Getting IDS HYYP Integration going" width="240" height="180" border="10" /></a>
  
 
 0) DELETE THE OLD VERSION! 
