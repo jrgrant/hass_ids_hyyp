@@ -10,11 +10,8 @@ Support, updates, bugfixes, features, etc. will be limited*
 # To Install 
 **HACS Method (https://hacs.xyz/docs/setup/download/)**
 
+Steps in 1-4 Youtube video: http://www.youtube.com/watch?v=FGoE4XzUE38
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=FGoE4XzUE38
-" target="_blank"><img src="http://img.youtube.com/vi/FGoE4XzUE38/0.jpg" 
-alt="Getting IDS HYYP Integration going" width="240" height="180" border="10" /></a>
- 
 
 0) DELETE THE OLD VERSION! 
 1) Add custom repository to HACS (https://github.com/hawky358/hass_ids_hyyp)
@@ -32,8 +29,8 @@ alt="Getting IDS HYYP Integration going" width="240" height="180" border="10" />
 3) Add Hyyp integration via Settings > Devices and Services and configure via config flow. (See later part of youtube video)
 
 
-
-# Main changes from the original @RenierM26 version:
+---
+# Changelog:
 
 **Version 0.0.1.8**
 
@@ -43,7 +40,7 @@ alt="Getting IDS HYYP Integration going" width="240" height="180" border="10" />
 
 Updated Readme and allowed for display on HACS
 
-**Version 0.0.1.6**
+**Version 0.0.1.6** (Main changes from the original @RenierM26 version)
 
 1) This is a fork of @francoistk 's version. 
     - Fixed the requirement that a stay profile is required for every partitions
