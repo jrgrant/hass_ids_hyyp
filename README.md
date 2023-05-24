@@ -34,7 +34,7 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 
 **Version 0.0.1.8**
 
-*Planned:* Add panic button
+??
 
 **Version 0.0.1.7**
 
