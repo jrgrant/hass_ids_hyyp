@@ -10,11 +10,11 @@ Support, updates, bugfixes, features, etc. will be limited*
 # To Install 
 **HACS Method (https://hacs.xyz/docs/setup/download/)**
 
-Steps in 1-4 Youtube video: http://www.youtube.com/watch?v=FGoE4XzUE38
+Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 
 
 0) DELETE THE OLD VERSION! 
-1) Add custom repository to HACS (https://github.com/hawky358/hass_ids_hyyp)
+1) Add the following custom repository to HACS: https://github.com/hawky358/hass_ids_hyyp
 2) Download the integration using HACS 
 3) Restart Home Assistant
 4) Add Hyyp integration via Settings > Devices and Services and configure via config flow. 
