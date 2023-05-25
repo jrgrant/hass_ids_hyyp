@@ -13,7 +13,7 @@ Support, updates, bugfixes, features, etc. will be limited*
 Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 
 
-0) DELETE THE OLD VERSION! 
+0) DELETE THE OLD VERSION! (If you still have the old Pre 2023.4 version by @RenierM26)
 1) Add the following custom repository to HACS: https://github.com/hawky358/hass_ids_hyyp
 2) Download the integration using HACS 
 3) Restart Home Assistant
