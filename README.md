@@ -32,9 +32,16 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 ---
 # Changelog:
 
-**Version 0.0.1.8**
+**Version 0.0.1.8b1**
 
 Added Binary sensor which shows which zone triggered the alarm.
+
+    The sensor binary_sensor.[zonename]_trigger is normally FALSE.
+    If the alarm triggers this binary sensor will turn to TRUE on the zone that has triggered the alarm. 
+        (Note multiple sensors can trigger the alarm at the same time if it's armed) 
+    The sensor will only remain TRUE for 1 update cycle and then go back to FALSE (You should handle this with automations)
+
+Note that due to the polling time to the IDS server this currently only updates once every 60 seconds since there is no push from IDS implemented yet
 
 **Version 0.0.1.7**
 
