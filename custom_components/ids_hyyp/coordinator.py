@@ -24,7 +24,7 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize global IDS Hyyp data updater."""
         self.hyyp_client = api
         self._api_timeout = api_timeout
-        update_interval = timedelta(seconds=60)
+        update_interval = timedelta(seconds=30)
 
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=update_interval)
 

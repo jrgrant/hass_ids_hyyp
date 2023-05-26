@@ -32,6 +32,10 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 ---
 # Changelog:
 
+**Version 0.0.1.8b2**
+
+Changed polling to 30 seconds as test. (Don't want to be too agressive on IDS servers)
+
 **Version 0.0.1.8b1**
 
 Added Binary sensor which shows which zone triggered the alarm.
