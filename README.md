@@ -31,6 +31,14 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 ---
 # Changelog:
 
+**Version 1.0.0**
+
+Updated version number only
+The integration is working and I want to start fresh with version numbers
+API Version number also updated and bumped to 1.0.0
+
+
+
 **Version 0.0.1.7**
 
 Updated Readme and allowed for display on HACS
