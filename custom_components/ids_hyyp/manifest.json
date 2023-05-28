@@ -1,7 +1,7 @@
 {
   "domain": "ids_hyyp",
   "name": "IDS Hyyp(Beta)(hawkMod)",
-  "version": "1.0.0",
+  "version": "1.0.1.b1",
   "documentation": "https://github.com/hawky358/hass_ids_hyyp",
   "codeowners": ["@hawky358"],
   "requirements": ["pyhyypapihawkmod==1.0.1.dev1"],
