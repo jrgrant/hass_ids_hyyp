@@ -1,10 +1,12 @@
 # hass_ids_hyyp (hawkMod)
 
+Fixes issue with Home Assistant 2023.4+
+
 Home Assistant integration for IDS Hyyp (Beta)
 
 **Requires Home Assistant version 2023.4 and newer**
 
-*Disclaimer: I am not a programmer/developer/coder/etc. I created this fork since I want to continue using this integration. It was broken for me, so I fixed it (for me) and thought I'd share it so other people can also continue using it.
+*Disclaimer: I am not a programmer/developer/coder/etc. I created this fork since I want to continue using this integration. It was broken for me (2023.4), so I fixed it (for me) and thought I'd share it so other people can also continue using it.
 Support, updates, bugfixes, features, etc. will be limited*
 
 # To Install 
