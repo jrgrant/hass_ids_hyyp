@@ -33,9 +33,10 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 ---
 # Changelog:
 
-**Version 1.0.1-b2**
+**Version 1.0.1**
 
-Test version to check multisite implementation from API has been fixed.
+Fixed a bug which wouldn't allow set ups with multiple sites to be added.
+
 
 **Version 1.0.0**
 
