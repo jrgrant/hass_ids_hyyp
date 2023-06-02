@@ -14,3 +14,19 @@ zone_bypass_code:
       default: 1234
       selector:
         text:
+trigger_automation:
+  name: Trigger Automation
+  description: Trigger automation if arm code not saved.
+  target:
+    entity:
+      integration: ids_hyyp
+      domain: button
+  fields:
+    arm_code:
+      name: Arm code
+      description: Site level arm code.
+      required: true
+      example: 1234
+      default: 1234
+      selector:
+        text:

@@ -33,6 +33,10 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 ---
 # Changelog:
 
+**Version 1.1.0**
+Added the ability to trigger automations
+    If you've set up any automations/triggers in the IDS app it will now be available as a "push button" entity in home assistant
+
 **Version 1.0.1**
 
 Fixed a bug which wouldn't allow set ups with multiple sites to be added.

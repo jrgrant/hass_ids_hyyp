@@ -19,6 +19,7 @@ DATA_COORDINATOR = "coordinator"
 
 # Service names
 SERVICE_BYPASS_ZONE = "zone_bypass_code"
+SERVICE_TRIGGER_AUTOMATION = "trigger_automation"
 
 # Attributes
 ATTR_BYPASS_CODE = "bypass_code"
