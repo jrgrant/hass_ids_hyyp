@@ -33,30 +33,7 @@ async def async_setup_entry(
             for trigger_id in coordinator.data[site_id]["triggers"]
         ]
     )
-
-    platform = entity_platform.async_get_current_platform()
-
-    platform.async_register_entity_service(
-        SERVICE_TRIGGER_AUTOMATION,
-        {vol.Required(ATTR_ARM_CODE): str},
-        "perform_trigger_automation",
-    )
     
-    
-
-
-
-
-
-async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
-) -> None:
-    """Set up Hyyp button based on a config entry."""
-    coordinator: HyypDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id][
-        DATA_COORDINATOR
-    ]
-    arm_code = entry.options.get(ATTR_ARM_CODE)
-
     async_add_entities(
         [
             HyypStayArmButton(coordinator, site_id, partition_id, stay_profile_id, arm_code)
@@ -69,14 +46,17 @@ async def async_setup_entry(
     platform = entity_platform.async_get_current_platform()
 
     platform.async_register_entity_service(
+        SERVICE_TRIGGER_AUTOMATION,
+        {vol.Required(ATTR_ARM_CODE): str},
+        "perform_trigger_automation",
+    )
+    
+    platform.async_register_entity_service(
         SERVICE_STAY_PROFILE_ARM,
         {vol.Required(ATTR_ARM_CODE): str},
         "perform_stay_profile_arm",
     )
-
-    
-    
-    
+      
     
 class HyypStayArmButton(HyypPartitionEntity, ButtonEntity):
     """Representation of a IDS Hyyp stay arm entity button. This is to allow for multiple stay arm profiles"""
