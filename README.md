@@ -7,6 +7,7 @@ Home Assistant integration for IDS Hyyp (Beta)
 **Requires Home Assistant version 2023.4 and newer**
 
 *Disclaimer: I am not a programmer/developer/coder/etc. I created this fork since I want to continue using this integration. It was broken for me (2023.4), so I fixed it (for me) and thought I'd share it so other people can also continue using it.
+
 Support, updates, bugfixes, features, etc. will be limited*
 
 # To Install 
@@ -21,7 +22,6 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 3) Restart Home Assistant
 4) Add Hyyp integration via Settings > Devices and Services and configure via config flow. 
 
-
 **SSH Method**
 
 0) DELETE THE OLD VERSION from /config/custom_components/
@@ -32,6 +32,18 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 
 ---
 # Changelog:
+
+**Version 1.3.0b1**
+- Test version
+- Added Binary sensor which shows which zone triggered the alarm.
+
+    The sensor binary_sensor.[zonename]_trigger is normally FALSE.
+    If the alarm triggers this binary sensor will turn to TRUE on the zone that has triggered the alarm. 
+        (Note multiple sensors can trigger the alarm at the same time if it's armed) 
+    The sensor will only remain TRUE for 1 update cycle and then go back to FALSE (You should handle this with automations)
+
+Note that due to the polling time to the IDS server this currently only updates once every 60 seconds since there is no push from IDS implemented
+
 
 **Version 1.2.0**
 - If you have more that one stay-profile, there will now be a button entity (and a service) in home assistant for each of the stay-profiles which allows you to arm each of the "Stay-Profiles" and swap between them
@@ -52,6 +64,7 @@ Updated version number only
 The integration is working and I want to start fresh with version numbers
 API Version number also updated and bumped to 1.0.0
 
+Changed polling to 30 seconds as test. (Don't want to be too agressive on IDS servers)
 
 
 **Version 0.0.1.7**

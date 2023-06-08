@@ -11,7 +11,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DATA_COORDINATOR, DOMAIN
 from .coordinator import HyypDataUpdateCoordinator
-from .entity import HyypSiteEntity
+from .entity import HyypSiteEntity, HyypPartitionEntity
 
 PARALLEL_UPDATES = 1
 
@@ -31,12 +31,29 @@ async def async_setup_entry(
     ]
 
     async_add_entities(
+
         [
             HyypSensor(coordinator, site_id, sensor)
             for site_id in coordinator.data
             for sensor, value in coordinator.data[site_id].items()
             if sensor in BINARY_SENSOR_TYPES
             if value is not None
+            
+        ]
+
+    )
+    
+    
+    async_add_entities(
+        
+        [
+            
+            HyypZoneTriggerSensor(coordinator, site_id, partition_id, zone_id)
+            for site_id in coordinator.data
+            for partition_id in coordinator.data[site_id]["partitions"]
+            for zone_id in coordinator.data[site_id]["partitions"][partition_id][
+                "zones"
+            ]
         ]
     )
 
@@ -63,3 +80,29 @@ class HyypSensor(HyypSiteEntity, BinarySensorEntity):
     def is_on(self) -> bool:
         """Return the state of the binary sensor."""
         return bool(self.data[self._sensor_name])
+
+
+class HyypZoneTriggerSensor(HyypPartitionEntity, BinarySensorEntity):
+    """Representation of a IDS Hyyp sensor."""
+
+    coordinator: HyypDataUpdateCoordinator
+
+    def __init__(
+        self,
+        coordinator: HyypDataUpdateCoordinator,
+        site_id: int,
+        partition_id: int,
+        zone_id: str,
+    ) -> None:
+        """Initialize the sensor."""
+        super().__init__(coordinator, site_id, partition_id)
+        self._sensor_name = f"{self.partition_data['zones'][zone_id]['name'].title()} trigger"
+        self._zone_id = zone_id
+        self._attr_name = f"{self.partition_data['zones'][zone_id]['name'].title()} trigger"
+        self._attr_unique_id = f"{self._site_id}_{partition_id}_{zone_id}_trigger"
+      
+   
+    @property
+    def is_on(self) -> bool:
+        """Return the state of the binary sensor."""
+        return bool(self.partition_data["zones"][self._zone_id]["triggered"])
