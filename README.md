@@ -33,7 +33,7 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 ---
 # Changelog:
 
-**Version 1.3.0b1**
+**Version 1.3.0-b1**
 - Test version
 - Added Binary sensor which shows which zone triggered the alarm.
 
