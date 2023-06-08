@@ -33,8 +33,7 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 ---
 # Changelog:
 
-**Version 1.2.0-b1**
-- Test version
+**Version 1.2.0**
 - If you have more that one stay-profile, there will now be a button entity (and a service) in home assistant for each of the stay-profiles which allows you to arm each of the "Stay-Profiles" and swap between them
 - When armed to a stay profile, the stay profile name will be shown in the "armed" box
 
