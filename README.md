@@ -1,19 +1,25 @@
 # hass_ids_hyyp (hawkMod)
+Home Assistant integration for IDS Hyyp 
 
-Fixes issue with Home Assistant 2023.4+
 
-Home Assistant integration for IDS Hyyp (Beta)
+**What is "hawkMod"**
+
+- This integration was originally developed by @RenierM26. 
+- With Home Assistant version 2023.4 this integration broke and there was no longer any support or updates from the original developer.
+- "hawkMod" is the name of this fork. The name was changed to distinguish it from the original and to prevent any confusion with the original version.
+- hawkMod also uses a different modified API and has also added several features (See changelog below)
 
 **Requires Home Assistant version 2023.4 and newer**
 
 *Disclaimer: I am not a programmer/developer/coder/etc. I created this fork since I want to continue using this integration. It was broken for me (2023.4), so I fixed it (for me) and thought I'd share it so other people can also continue using it.
-Support, updates, bugfixes, features, etc. will be limited*
+Support, updates, bugfixes, features, etc. will be limited, but I will share anything I develop.*
 
 # To Install 
-**HACS Method (https://hacs.xyz/docs/setup/download/)**
+**HACS Method** 
+
+Get HACS here: (https://hacs.xyz/docs/setup/download/)
 
 Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
-
 
 0) DELETE THE OLD VERSION! (If you still have the old Pre 2023.4 version by @RenierM26)
 1) Add the following custom repository to HACS: https://github.com/hawky358/hass_ids_hyyp
@@ -21,17 +27,14 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 3) Restart Home Assistant
 4) Add Hyyp integration via Settings > Devices and Services and configure via config flow. 
 
-
-**SSH Method**
-
-0) DELETE THE OLD VERSION from /config/custom_components/
-1) Copy the ids_hyyp folder into /config/custom_components/
-2) Reboot
-3) Add Hyyp integration via Settings > Devices and Services and configure via config flow. (See later part of youtube video)
+HACS Method is recommended. If you know how to use SSH or another sharing method, you don't need a guide in any event.
 
 
 ---
 # Changelog:
+
+**Version 1.2.2**
+- Remove "Beta" from the name, since it doesn't really mean anything at this point.
 
 **Version 1.2.1**
 - Fixed a bug where the "Panel" showed disarmed even though the state attribute for the panel showed a "Stay Armed" name. This is a limitation of the home assistant alarm control panel entity. The control panel state attribute has been reverted and no longer has detailed names.
