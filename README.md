@@ -33,6 +33,10 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 ---
 # Changelog:
 
+**Version 1.2.1**
+- Fixed a bug where the "Panel" showed disarmed even though the state attribute for the panel showed a "Stay Armed" name. This is a limitation of the home assistant alarm control panel entity. The control panel state attribute has been reverted and no longer has detailed names.
+- The status and name of the armed mode is now contained within a new sensor "sensor.[site]_[parition]_armed_status" and will display the various states e.g.  "Stay Arm 1" or "Stay Arm 2", disarmed etc.
+
 **Version 1.2.0**
 - If you have more that one stay-profile, there will now be a button entity (and a service) in home assistant for each of the stay-profiles which allows you to arm each of the "Stay-Profiles" and swap between them
 - When armed to a stay profile, the stay profile name will be shown in the "armed" box
