@@ -33,17 +33,20 @@ HACS Method is recommended. If you know how to use SSH or another sharing method
 ---
 # Changelog:
 
+**Version 1.3.0-b2**
+- Test version, please give feedback on issues
+- Merged fixes from 1.2.1 and 1.2.2 branches.
 
 **Version 1.3.0-b1**
-- Test version
+- Test version, please give feedback on issues
 - Added Binary sensor which shows which zone triggered the alarm.
 
     The sensor binary_sensor.[zonename]_trigger is normally FALSE.
     If the alarm triggers this binary sensor will turn to TRUE on the zone that has triggered the alarm. 
         (Note multiple sensors can trigger the alarm at the same time if it's armed) 
-    The sensor will only remain TRUE for 1 update cycle and then go back to FALSE (You should handle this with automations)
+    The sensor will only remain TRUE for 1 update cycle and then go back to FALSE (You should handle any home assistant triggers with automations)
 
-Note that due to the polling time to the IDS server this currently only updates once every 60 seconds since there is no push from IDS implemented
+Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented
 
 
 **Version 1.2.2**
