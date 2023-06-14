@@ -86,12 +86,7 @@ class HyypAlarm(HyypPartitionEntity, AlarmControlPanelEntity):
 
         if self.partition_data["armed"]:
             if "stayArmed" in self.partition_data and self.partition_data["stayArmed"]:
-                if 'stayArmedProfileName' in self.partition_data:
-                    stayarmed_name = f"Armed {self.partition_data['stayArmedProfileName']}"
-                    return stayarmed_name
-                else:
-                    return STATE_ALARM_ARMED_HOME
-
+                return STATE_ALARM_ARMED_HOME          
             return STATE_ALARM_ARMED_AWAY
 
         return STATE_ALARM_DISARMED

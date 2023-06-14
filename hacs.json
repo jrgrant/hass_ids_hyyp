@@ -1,5 +1,5 @@
 {
-    "name": "IDS Hyyp(Beta)(hawkMod)",
+    "name": "IDS Hyyp (hawkMod)",
     "hacs": "1.6.0",
     "domains": [
 		"alarm_control_panel",
