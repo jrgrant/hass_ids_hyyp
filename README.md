@@ -36,6 +36,7 @@ HACS Method is recommended. If you know how to use SSH or another sharing method
 **Version 1.3.0-b2**
 - Test version, please give feedback on issues
 - Merged fixes from 1.2.1 and 1.2.2 branches.
+- Bumped API dependency
 
 **Version 1.3.0-b1**
 - Test version, please give feedback on issues
