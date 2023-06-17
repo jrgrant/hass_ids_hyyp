@@ -43,7 +43,7 @@ IDS Hyyp integration for Home Assistant
 
 # Examples
 In its most basic form, IDS Hyyp supports the "Alarm Control Panel" entity which is part of Home Assistant.
-This allows arming and disarming of partitions by similating a control panel.
+This allows arming and disarming of partitions by simulating a control panel.
 
 ![panel](images/panel.gif)
 
@@ -77,7 +77,7 @@ HACS Method is recommended. If you know how to use SSH or another uploading meth
 # About
 
 ## What is this integration
-- IDS Hyyp integration is a Home Assistant integration which allows control of IDS alarm panels equiped with the hyyp module.
+- IDS Hyyp integration is a Home Assistant integration which allows control of IDS alarm panels equipped with the hyyp module.
 - The integration works via the existing IDS servers emulating the app.
 
 
@@ -108,7 +108,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 **Version 1.3.0**
 - Added Binary sensor which shows which zone triggered the alarm.
 
-    The sensor binary_sensor.[zonename]_trigger is normally FALSE.
+    The sensor binary_sensor.[zone_name]_trigger is normally FALSE.
     If the alarm triggers this binary sensor will turn to TRUE on the zone that has triggered the alarm. 
         (Note multiple sensors can trigger the alarm at the same time if it's armed) 
     The sensor will  remain TRUE for 1 update cycles and then go back to FALSE (You should handle any home assistant triggers with automations)
@@ -123,12 +123,12 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 **Version 1.2.1**
 - Fixed a bug where the "Panel" showed disarmed even though the state attribute for the panel showed a "Stay Armed" name. This is a limitation of the home assistant alarm control panel entity. The control panel state attribute has been reverted and no longer has detailed names in the .status attribute.
-- The status and name of the armed mode is now contained within a new sensor "sensor.[site]_[parition]_armed_status" and will display the various states e.g.  "Stay Arm 1" or "Stay Arm 2", disarmed etc.
+- The status and name of the armed mode is now contained within a new sensor "sensor.[site]_[partition]_armed_status" and will display the various states e.g.  "Stay Arm 1" or "Stay Arm 2", disarmed etc.
 
 
 **Version 1.2.0**
 - Added the ability to use more than one stay profile
-    - If you have more that one stay-profile, there will now be a button entity (and a service) in home assistant for each of the stay-profiles which allows you to arm each of the "Stay-Profiles" and swap between them
+    - If you have more than one stay-profile, there will now be a button entity (and a service) in home assistant for each of the stay-profiles which allows you to arm each of the "Stay-Profiles" and swap between them
     - When armed to a stay profile, the stay profile name will be shown in the "armed" box
 
 **Version 1.1.0**
@@ -145,7 +145,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 - Updated version number only
   - The integration is working and I want to start fresh with version numbers
 - API Version number also updated and bumped to 1.0.0
-- Changed polling to 30 seconds as test. (Don't want to be too agressive on IDS servers)
+- Changed polling to 30 seconds as test. (Don't want to be too aggressive on IDS servers)
 
 
 **Version 0.0.1.7**
@@ -157,7 +157,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 1) This is a fork of @francoistk 's version. 
     - Fixed the requirement that a stay profile is required for every partition
 2) Reverse engineered the pyHyypApi protobuf files and recompiled. (Fixes 2023.4 compatibility) This is not a direct change to ids_hyyp, rather it's a change to the API (https://github.com/hawky358/pyHyypApi)
-3) Modified dependancies in IDS_HYYP to point to new modified pyhyypapi api package
+3) Modified dependencies in IDS_HYYP to point to new modified pyhyypapi api package
 4) Changed name to IDS Hyyp (Beta)(hawkMod) to avoid potential conflicts with previous version
 5) Works with 2023.4 and higher.
 
