@@ -106,7 +106,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.3.1-b1**
+**Version 1.3.1**
 - Fixed a bug where a load error ocurred if you didn't have any "triggers" (Bumped API dependency as this was fixed in the API)
 
 **Version 1.3.0**
