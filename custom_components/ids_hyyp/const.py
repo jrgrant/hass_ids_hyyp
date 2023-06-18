@@ -11,6 +11,10 @@ CONF_PKG = "pkg"
 PKG_ADT_SECURE_HOME = "za.co.adt.securehome.android"
 PKG_IDS_HYYP = "com.hyyp247.home"
 
+# Pacakage Alias
+PKG_ADT_ALIAS = "ADT Securehome (Untested)"
+PGK_IDS_HYYP_ALIAS = "IDS Hyyp"
+
 # Defaults
 DEFAULT_TIMEOUT = 25
 

@@ -13,6 +13,7 @@ from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow
 from homeassistant.const import CONF_EMAIL, CONF_PASSWORD, CONF_TIMEOUT, CONF_TOKEN
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers.selector import selector
 
 from .const import (
     ATTR_ARM_CODE,
@@ -21,6 +22,8 @@ from .const import (
     DOMAIN,
     PKG_ADT_SECURE_HOME,
     PKG_IDS_HYYP,
+    PKG_ADT_ALIAS,
+    PGK_IDS_HYYP_ALIAS
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -94,16 +97,32 @@ class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
                     options=DEFAULT_OPTIONS,
                 )
 
-        data_schema = vol.Schema(
-            {
+        data_schema = {
                 vol.Required(CONF_EMAIL): str,
                 vol.Required(CONF_PASSWORD): str,
-                vol.Required(CONF_PKG, default=PKG_ADT_SECURE_HOME): vol.In(
-                    [PKG_ADT_SECURE_HOME, PKG_IDS_HYYP]
-                ),
-            }
-        )
-
+                vol.Required(CONF_PKG, default=PKG_IDS_HYYP): selector({
+                "select": {
+                    "options": [
+                        {
+                            "label" : PGK_IDS_HYYP_ALIAS,
+                            "value" : PKG_IDS_HYYP
+                            
+                        }, 
+        
+                        {
+                            "label" : PKG_ADT_ALIAS,
+                            "value" : PKG_ADT_SECURE_HOME
+                            
+                        },                
+                        
+                        ],
+                }
+            })         
+        }
+                
+        data_schema=vol.Schema(data_schema)
+        
+        EventCategory = {"1": "Emergency", "2": "User", "3": "Trouble", "4": "Information"}
         return self.async_show_form(
             step_id="user", data_schema=data_schema, errors=errors
         )
