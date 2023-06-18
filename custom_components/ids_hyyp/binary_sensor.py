@@ -51,9 +51,9 @@ async def async_setup_entry(
             HyypZoneTriggerSensor(coordinator, site_id, partition_id, zone_id)
             for site_id in coordinator.data
             for partition_id in coordinator.data[site_id]["partitions"]
-            for zone_id in coordinator.data[site_id]["partitions"][partition_id][
-                "zones"
-            ]
+            for zone_id in coordinator.data[site_id]["partitions"][partition_id]["zones"]
+            if 'triggered' in coordinator.data[site_id]["partitions"][partition_id]["zones"][zone_id]
+            
         ]
     )
 

@@ -49,7 +49,7 @@ This allows arming and disarming of partitions by simulating a control panel.
 ![panel](images/panel.gif)
 
 
-Example of a simple "panel" which has for away arm
+Example of a simple "panel" for away arm
 
 ![ex1](images/awayexample.gif)
 
@@ -106,8 +106,11 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.3.2-b3**
+- Fixed a bug where ADT systems won't load due to "triggered" zone not being available. The triggered zone feature (1.3.0) has been removed from ADT implementations as a work-around
+
 **Version 1.3.1**
-- Fixed a bug where a load error ocurred if you didn't have any "triggers" (Bumped API dependency as this was fixed in the API)
+- Fixed a bug where stay profile buttons wouldn't load if you didn't have any "automations" (Bumped API dependency as this was fixed in the API)
 
 **Version 1.3.0**
 - Added Binary sensor which shows which zone triggered the alarm.
@@ -118,7 +121,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
     The sensor will  remain TRUE for 1 update cycles and then go back to FALSE (You should handle any home assistant triggers with automations)
     The sensor may remain TRUE for 2 update cycles depending on how the alarm is synchronized with the update poll.
     Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented
-
+-  This feature is not currently available for ADT systems
 - Bumped API dependency
 
 
