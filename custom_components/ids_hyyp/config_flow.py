@@ -103,17 +103,18 @@ class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
                 vol.Required(CONF_PKG, default=PKG_IDS_HYYP): selector({
                 "select": {
                     "options": [
-                        {
-                            "label" : PGK_IDS_HYYP_ALIAS,
-                            "value" : PKG_IDS_HYYP
-                            
-                        }, 
         
                         {
                             "label" : PKG_ADT_ALIAS,
                             "value" : PKG_ADT_SECURE_HOME
                             
-                        },                
+                        },       
+                        
+                        {
+                            "label" : PGK_IDS_HYYP_ALIAS,
+                            "value" : PKG_IDS_HYYP
+                            
+                        },          
                         
                         ],
                 }
