@@ -106,8 +106,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.3.2-b3**
-- Fixed a bug where ADT systems won't load due to "triggered" zone not being available. The triggered zone feature (1.3.0) has been removed from ADT implementations as a work-around
+**Version 1.3.2**
+- Fixed a bug where ADT systems won't load due to "triggered" zone not being available. The triggered zone feature (1.3.0) has been removed if no trigger information is received (ADT Systems)
+- Bumped API dependency to the debug enabled API
 
 **Version 1.3.1**
 - Fixed a bug where stay profile buttons wouldn't load if you didn't have any "automations" (Bumped API dependency as this was fixed in the API)
