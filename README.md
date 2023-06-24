@@ -107,7 +107,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 # Changelog:
 
 **Version 1.3.2**
-- Fixed a bug where ADT systems won't load due to "triggered" zone not being available. The triggered zone feature (1.3.0) has been removed if no trigger information is received (ADT Systems)
+- Fixed a bug where ADT systems won't load due to "triggered" zone not being available. The triggered zone feature (1.3.0) is been removed if no trigger information is received (ADT Systems)
 - Bumped API dependency to the debug enabled API
 
 **Version 1.3.1**
@@ -122,7 +122,6 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
     The sensor will  remain TRUE for 1 update cycles and then go back to FALSE (You should handle any home assistant triggers with automations)
     The sensor may remain TRUE for 2 update cycles depending on how the alarm is synchronized with the update poll.
     Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented
--  This feature is not currently available for ADT systems
 - Bumped API dependency
 
 
