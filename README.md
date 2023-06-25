@@ -48,10 +48,15 @@ This allows arming and disarming of partitions by simulating a control panel.
 
 ![panel](images/panel.gif)
 
+<br>
+You can of course use the entities to create simple buttons and interfaces:
 
 Example of a simple "panel" for away arm
 
 ![ex1](images/awayexample.gif)
+
+<br>
+
 
 Example of a simple "panel" which has multiple stay profiles
 
