@@ -28,8 +28,8 @@ There is a **[Discord](https://discord.gg/)** server for general discussions or 
     - Creates a `button.[site_name]_[partition_name]_[stay_profile_name]` button entity which can be used to arm a specific stay profile. You can also switch between stay profiles while armed in a stay profile.
     - Creates a `sensor.[site_name]_[partition_name]_status` sensor. This sensor provides more detailed feedback regarding the state of the panel. This is similar to the `"Alarm Control Panel".status` however it also supports additional stay profile names which the native entity does not.
         - Examples of statuses: `Armed`, `Disarmed`, `Triggered`, `Away Armed`, `Armed Stay`, `Armed [Stay_profile_name]`
-- IDS "Automations".  
-    *"Automations" is the term used in the IDS app to activate programmable outputs e.g. to open your gate or garage door.*
+- IDS "Automations" / "Triggers".  
+    *"Automations" is the term used in the IDS app to activate programmable outputs e.g. to open your gate or garage door. The IDS app also calls it "Triggers"*
     - Creates a `button.[site_name]_[automation_name]` button entity. This entity pushes the "automation" button similar to pushing the button in the IDS app.
 - Shows which zone triggered an alarm 
     - Creates a `binary_sensor.[zone_name]_trigger` binary sensor entity. If the alarm is triggered, this entity changes to TRUE on the zone that triggered the alarm.
@@ -112,7 +112,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 # Changelog:
 
 **Version 1.3.2**
-- Fixed a bug where ADT systems won't load due to "triggered" zone not being available. The triggered zone feature (1.3.0) is been removed if no trigger information is received (ADT Systems)
+- Fixed a bug where ADT systems wouldn't load due to "triggered zones" not being available from the IDS server. The triggered zone feature (1.3.0) is been removed if no trigger information is received (ADT Systems)
 - Bumped API dependency to the debug enabled API
 
 **Version 1.3.1**
