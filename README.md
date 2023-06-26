@@ -110,6 +110,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.3.3-b1**
+- Renamed the options in the config flow during initial setup to be less "obscure"
+
 **Version 1.3.2**
 - Fixed a bug where ADT systems wouldn't load due to "triggered zones" not being available from the IDS server. The triggered zone feature (1.3.0) is been removed if no trigger information is received (ADT Systems)
 - Bumped API dependency to the debug enabled API
