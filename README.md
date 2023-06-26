@@ -6,7 +6,6 @@ IDS Hyyp integration for Home Assistant
 
 ![Installs](https://img.shields.io/badge/dynamic/json?color=41BDF5&logo=home-assistant&label=integration%20usage&suffix=%20installs&cacheSeconds=86400&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.ids_hyyp.total)
 
-There is a **[Discord](https://discord.gg/)** server for general discussions or help. **(Down for now)**
 
 # TOC
 - [Features](#features)
@@ -28,8 +27,8 @@ There is a **[Discord](https://discord.gg/)** server for general discussions or 
     - Creates a `button.[site_name]_[partition_name]_[stay_profile_name]` button entity which can be used to arm a specific stay profile. You can also switch between stay profiles while armed in a stay profile.
     - Creates a `sensor.[site_name]_[partition_name]_status` sensor. This sensor provides more detailed feedback regarding the state of the panel. This is similar to the `"Alarm Control Panel".status` however it also supports additional stay profile names which the native entity does not.
         - Examples of statuses: `Armed`, `Disarmed`, `Triggered`, `Away Armed`, `Armed Stay`, `Armed [Stay_profile_name]`
-- IDS "Automations".  
-    *"Automations" is the term used in the IDS app to activate programmable outputs e.g. to open your gate or garage door.*
+- IDS "Automations" / "Triggers".  
+    *"Automations" is the term used in the IDS app to activate programmable outputs e.g. to open your gate or garage door. The IDS app also calls it "Triggers"*
     - Creates a `button.[site_name]_[automation_name]` button entity. This entity pushes the "automation" button similar to pushing the button in the IDS app.
 - Shows which zone triggered an alarm 
     - Creates a `binary_sensor.[zone_name]_trigger` binary sensor entity. If the alarm is triggered, this entity changes to TRUE on the zone that triggered the alarm.
@@ -48,10 +47,15 @@ This allows arming and disarming of partitions by simulating a control panel.
 
 ![panel](images/panel.gif)
 
+<br>
+You can of course use the entities to create simple buttons and interfaces:
 
-Example of a simple "panel" which has for away arm
+Example of a simple "panel" for away arm
 
 ![ex1](images/awayexample.gif)
+
+<br>
+
 
 Example of a simple "panel" which has multiple stay profiles
 
@@ -106,8 +110,12 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.3.2**
+- Fixed a bug where ADT systems wouldn't load due to "triggered zones" not being available from the IDS server. The triggered zone feature (1.3.0) is been removed if no trigger information is received (ADT Systems)
+- Bumped API dependency to the debug enabled API
+
 **Version 1.3.1**
-- Fixed a bug where a load error ocurred if you didn't have any "triggers" (Bumped API dependency as this was fixed in the API)
+- Fixed a bug where stay profile buttons wouldn't load if you didn't have any "automations" (Bumped API dependency as this was fixed in the API)
 
 **Version 1.3.0**
 - Added Binary sensor which shows which zone triggered the alarm.
@@ -118,7 +126,6 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
     The sensor will  remain TRUE for 1 update cycles and then go back to FALSE (You should handle any home assistant triggers with automations)
     The sensor may remain TRUE for 2 update cycles depending on how the alarm is synchronized with the update poll.
     Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented
-
 - Bumped API dependency
 
 
