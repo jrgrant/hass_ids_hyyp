@@ -13,7 +13,7 @@ PKG_ADT_SECURE_HOME = "za.co.adt.securehome.android"
 
 # Pacakage Alias
 PGK_IDS_HYYP_ALIAS = "IDS Hyyp"
-PKG_ADT_ALIAS = "ADT Securehome (Untested)"
+PKG_ADT_ALIAS = "ADT Securehome"
 
 
 # Defaults
