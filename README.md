@@ -110,7 +110,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.3.3-b1**
+**Version 1.3.3**
 - Renamed the options in the config flow during initial setup to be less "obscure"
 ![Alt text](images/configflowchange.png)
 
