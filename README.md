@@ -37,8 +37,8 @@ IDS Hyyp integration for Home Assistant
         *Note multiple sensors can trigger the alarm at the same time if it's armed*
         - The sensor will  remain TRUE for 1 update cycles and then go back to FALSE  
         *You should handle any home assistant triggers with automations*
-        - The sensor may remain TRUE for 2 update cycles depending on how the alarm is synchronized with the update poll.
-        - *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. The sensor may therefore be up to 30 seconds "late"*
+            - The sensor may remain TRUE for 2 update cycles depending on how the alarm is synchronized with the update poll.
+        - *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. This sensor may therefore be up to 30 seconds "late"*
 
 
 # Examples
@@ -167,14 +167,14 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 - Updated Readme and allowed for display on HACS
 
-**Version 0.0.1.6** (Main changes from the original @RenierM26 version)
+**Version 0.0.1.6** (Main changes from the original [RenierM26](https://github.com/RenierM26/hass_ids_hyyp) version)
 
-1) This is a fork of @francoistk 's version. 
-    - Fixed the requirement that a stay profile is required for every partition
-2) Reverse engineered the pyHyypApi protobuf files and recompiled. (Fixes 2023.4 compatibility) This is not a direct change to ids_hyyp, rather it's a change to the API (https://github.com/hawky358/pyHyypApi)
-3) Modified dependencies in IDS_HYYP to point to new modified pyhyypapi api package
-4) Changed name to IDS Hyyp (Beta)(hawkMod) to avoid potential conflicts with previous version
-5) Works with 2023.4 and higher.
+- This is a fork of [francoistk's](https://github.com/francoistk/hass_ids_hyyp) version which was a fork from [RenierM26's](https://github.com/RenierM26/hass_ids_hyyp) original version
+    - [francoistk](https://github.com/francoistk/hass_ids_hyyp) fixed the requirement that a stay profile is required for every partition
+- Reverse engineered the pyHyypApi protobuf files and recompiled. (Fixes 2023.4 compatibility) This is not a direct change to ids_hyyp, rather it's a change to the API (https://github.com/hawky358/pyHyypApi)
+- Modified dependencies in IDS_HYYP to point to new modified pyhyypapi api package
+- Changed name to IDS Hyyp (Beta)(hawkMod) to avoid potential conflicts with previous version
+- Works with 2023.4 and higher.
 
 
 
