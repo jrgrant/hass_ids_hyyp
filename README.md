@@ -97,6 +97,7 @@ HACS Method is recommended. If you know how to use SSH or another uploading meth
 ## Requirements
 
 - Requires Home Assistant version 2023.4 and newer.
+    - Version 2023.7.3 and newer is recommended.
 - Due to the integration connecting to IDS servers, the Home Assistant server requires an internet connection.
 
 ## Disclaimer
@@ -109,6 +110,10 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 ---
 # Changelog:
+
+**Version 1.3.4-b1**
+- When a "Stay Profile" is armed the zones which are bypassed as part of this profile will now show as bypassed. i.e. `switch.[zone_name]` will go `OFF` (API Change)
+    - Updated API dependancy.
 
 **Version 1.3.3**
 - Renamed the options in the config flow during initial setup to be less "obscure"
