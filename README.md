@@ -111,6 +111,11 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+
+**Version 1.3.4-b3**
+- Added a fix where system wouldn't load when no notifications are received.
+
+
 **Version 1.3.4-b2**
 - Fixed issue where previously bypassed zones don't show as bypassed
 
