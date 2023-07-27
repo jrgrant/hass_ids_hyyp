@@ -132,6 +132,11 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.4.0-b2**
+- If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
+- Changed the API refresh requests to series. This makes the replies more reliable when multiple actions are performed.
+
+
 **Version 1.4.0-b1**
 
 - If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
