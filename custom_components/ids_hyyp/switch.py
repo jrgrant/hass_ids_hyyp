@@ -75,6 +75,20 @@ class HyypSwitch(HyypPartitionEntity, SwitchEntity):
     def is_on(self) -> bool:
         """Return the state of the switch."""
         return not self.partition_data["zones"][self._zone_id]["bypassed"]
+    
+    @property
+    def extra_state_attributes(self):
+        violated = bool(self.partition_data["zones"][self._zone_id]["openviolated"])
+        tampered = bool(self.partition_data["zones"][self._zone_id]["tampered"])
+        stay_bypassed = bool(self.partition_data["zones"][self._zone_id]["stay_bypassed"])
+        triggered = bool(self.partition_data["zones"][self._zone_id]["triggered"])
+        state = {"violated" : violated,
+                 "tampered" : tampered,
+                 "triggered" : triggered,
+                 "stay_bypassed" : stay_bypassed,
+                 }
+        return state
+    
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch entity on."""

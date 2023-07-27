@@ -111,6 +111,13 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.4.0-b1**
+- IDS servers now provide additional zone information which have been added to the integration. This information is shown as an attributed within the zone switch.
+    - The `switch.[zone_name]` will now have the following attributes 
+        - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
+        - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, by implemented directly from IDS feedback)
+        - `triggered` - Will show `True` when the zone is triggered during armed state. This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor
+        - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active
 
 **Version 1.3.4-b3**
 - Added a fix where system wouldn't load when no notifications are received.

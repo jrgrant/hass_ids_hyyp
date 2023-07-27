@@ -13,6 +13,7 @@ from .const import (
     ATTR_ARM_CODE,
     ATTR_BYPASS_CODE,
     CONF_PKG,
+    USER_ID,
     DATA_COORDINATOR,
     DEFAULT_TIMEOUT,
     DOMAIN,
@@ -43,7 +44,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         hass.config_entries.async_update_entry(entry, options=options)
 
-    hyyp_client = HyypClient(token=entry.data[CONF_TOKEN], pkg=entry.data[CONF_PKG])
+    hyyp_client = HyypClient(token=entry.data[CONF_TOKEN], pkg=entry.data[CONF_PKG], userid=entry.data[USER_ID])
 
     coordinator = HyypDataUpdateCoordinator(
         hass, api=hyyp_client, api_timeout=entry.options[CONF_TIMEOUT]
