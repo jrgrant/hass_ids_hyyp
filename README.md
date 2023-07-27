@@ -133,6 +133,8 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 # Changelog:
 
 **Version 1.4.0-b1**
+
+- If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
 - IDS servers now provide additional zone information which have been added to the integration. This information is shown as an attributed within the zone switch.
     - The `switch.[zone_name]` will now have the following attributes 
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
