@@ -13,7 +13,7 @@ from .const import DATA_COORDINATOR, DOMAIN
 from .coordinator import HyypDataUpdateCoordinator
 from .entity import HyypSiteEntity, HyypPartitionEntity
 
-PARALLEL_UPDATES = 1
+
 
 BINARY_SENSOR_TYPES: dict[str, BinarySensorEntityDescription] = {
     "isMaster": BinarySensorEntityDescription(key="isMaster"),
@@ -21,7 +21,7 @@ BINARY_SENSOR_TYPES: dict[str, BinarySensorEntityDescription] = {
     "isOnline": BinarySensorEntityDescription(key="isOnline"),
 }
 
-
+PARALLEL_UPDATES = 1
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:

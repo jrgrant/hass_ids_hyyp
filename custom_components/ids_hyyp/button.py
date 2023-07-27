@@ -16,7 +16,7 @@ from .const import DATA_COORDINATOR, DOMAIN, SERVICE_TRIGGER_AUTOMATION, ATTR_AR
 from .coordinator import HyypDataUpdateCoordinator
 from .entity import HyypSiteEntity, HyypPartitionEntity
 
-
+PARALLEL_UPDATES = 1
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
