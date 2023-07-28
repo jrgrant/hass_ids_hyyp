@@ -78,10 +78,19 @@ class HyypSwitch(HyypPartitionEntity, SwitchEntity):
     
     @property
     def extra_state_attributes(self):
-        violated = bool(self.partition_data["zones"][self._zone_id]["openviolated"])
-        tampered = bool(self.partition_data["zones"][self._zone_id]["tampered"])
-        stay_bypassed = bool(self.partition_data["zones"][self._zone_id]["stay_bypassed"])
-        triggered = bool(self.partition_data["zones"][self._zone_id]["triggered"])
+        
+        violated = False
+        tampered = False
+        triggered = False
+        stay_bypassed = False
+        if "openviolated" in self.partition_data["zones"][self._zone_id]:
+            violated = bool(self.partition_data["zones"][self._zone_id]["openviolated"])
+        if "tampered"  in self.partition_data["zones"][self._zone_id]:
+            tampered = bool(self.partition_data["zones"][self._zone_id]["tampered"])
+        if "stay_bypassed" in self.partition_data["zones"][self._zone_id]:
+            stay_bypassed = bool(self.partition_data["zones"][self._zone_id]["stay_bypassed"])
+        if "triggered" in self.partition_data["zones"][self._zone_id]:
+            triggered = bool(self.partition_data["zones"][self._zone_id]["triggered"])
         state = {"violated" : violated,
                  "tampered" : tampered,
                  "triggered" : triggered,
