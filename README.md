@@ -132,8 +132,11 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-
 **Version 1.4.0 b3**
+
+- Added fix to prevent crash when no Zone information is received.
+
+**Version 1.4.0 b2**
 
 - If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
 - **`binary_sensor.[zone_name]_trigger` will be removed soon, please update necessary code per below.**
