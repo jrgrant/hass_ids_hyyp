@@ -132,32 +132,25 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.4.0-b2**
-- If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
-- Changed the API refresh requests to series. This makes the replies more reliable when multiple actions are performed.
 
-
-**Version 1.4.0-b1**
+**Version 1.4.0 b3**
 
 - If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
+- **`binary_sensor.[zone_name]_trigger` will be removed soon, please update necessary code per below.**
 - IDS servers now provide additional zone information which have been added to the integration. This information is shown as an attributed within the zone switch.
     - The `switch.[zone_name]` will now have the following attributes 
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, by implemented directly from IDS feedback)
         - `triggered` - Will show `True` when the zone is triggered during armed state. This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active
+- When a "Stay Profile" is armed the zones which are bypassed as part of this profile will now show as bypassed. i.e. `switch.[zone_name]` will go `OFF` (API Change)
+- Changed the API refresh requests to series. This makes the replies more reliable when multiple actions are performed.
 
-**Version 1.3.4-b3**
-- Added a fix where system wouldn't load when no notifications are received.
-
-
-**Version 1.3.4-b2**
-- Fixed issue where previously bypassed zones don't show as bypassed
-
-
-**Version 1.3.4-b1**
+**Version 1.3.4**
 - When a "Stay Profile" is armed the zones which are bypassed as part of this profile will now show as bypassed. i.e. `switch.[zone_name]` will go `OFF` (API Change)
     - Updated API dependancy.
+- Fixed issue where previously bypassed zones don't show as bypassed
+- Added a fix where system wouldn't load when no notifications are received.
 
 **Version 1.3.3**
 - Renamed the options in the config flow during initial setup to be less "obscure"
