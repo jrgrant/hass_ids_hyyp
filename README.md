@@ -132,7 +132,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.4.0 b4**
+**Version 1.4.1 b1**
 - Version bump only to prevent debug version from being latest and people "upgrading" to the debug version.
 
 **Version 1.4.0 b3**
