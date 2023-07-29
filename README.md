@@ -132,6 +132,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.4.0 b4**
+- Version bump only to prevent debug version from being latest and people "upgrading" to the debug version.
+
 **Version 1.4.0 b3**
 
 - Added fix to prevent crash when no Zone information is received.
