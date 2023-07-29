@@ -112,15 +112,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 # Changelog:
 
 
-**Version 1.3.4-b3**
-- Added a fix where system wouldn't load when no notifications are received.
-
-
-**Version 1.3.4-b2**
-- Fixed issue where previously bypassed zones don't show as bypassed
-
-
-**Version 1.3.4-b1**
+**Version 1.3.4**
 - When a "Stay Profile" is armed the zones which are bypassed as part of this profile will now show as bypassed. i.e. `switch.[zone_name]` will go `OFF` (API Change)
     - Updated API dependancy.
 
