@@ -3,6 +3,7 @@ from datetime import timedelta
 import logging
 from typing import Any
 import json
+import time
 
 from async_timeout import timeout
 from pyhyypapihawkmod.client import HyypClient
@@ -30,9 +31,8 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=update_interval)
 
-        self.hyyp_client.register_fcm_info_callback(self._update_fcm_data)
         pids = self._read_fcm_pids()
-        self.hyyp_client.initialize_fcm_notification_listener(persistent_pids=pids)
+        self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data, persistent_pids=pids)
 
     async def _async_update_data(self) -> dict[Any, Any]:
         """Fetch data from IDS Hyyp."""
@@ -74,7 +74,8 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         short_json = data["notification"]["data"]["notification"]
         if type(short_json) == str:
             short_json = json.loads(short_json)
-        message = str(short_json) #temp string workaround
+        short_json["timestamp"] = time.time()
+        message = short_json #temp string workaround
         self._update_notification_entity(message) 
     
     def _update_notification_entity(self, data):
