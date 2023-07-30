@@ -17,6 +17,14 @@ IDS Hyyp integration for Home Assistant
 
 # Features
 
+
+- Supports "Cell phone" type push notifications from IDS. These are the same as the notifications that you'd normally receive on your cellphone
+    - Notification summary is shown in `sensor.[site]_ids_push_notifications`
+    - You can for example add a push notification automation to get "instant" notifications similar to the IDS app.
+
+
+
+
 - Supports multiple sites and multiple partitions which are linked to your IDS Hyyp account.
 - Supports the "Alarm Control Panel" entity which is part of home assistant
 - Bypass of individual zones via switch entities
@@ -131,6 +139,16 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 ---
 # Changelog:
+
+**Version 1.5.0 b1**
+
+- If you are upgrading from  1.4.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
+- Implemented "Cell Phone" type "Push Notifications" 
+    - These are similar to the "Notifications" that you receive on your cellphone e.g. when disarming or alarm trigger. 
+    - Whenever a new message comes through, the summary is now displayed in `sensor.[site]_ids_push_notifications`
+    - Limited testing has been done and reporting method and text may change.
+    - You **MUST** restart Home Assistant once after re-adding the integration.
+
 
 **Version 1.4.1 b1**
 - Version bump only to prevent debug version from being latest and people "upgrading" to the debug version.

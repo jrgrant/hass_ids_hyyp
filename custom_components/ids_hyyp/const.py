@@ -7,6 +7,7 @@ MODEL = "Hyyp"
 # Configuration
 CONF_PKG = "pkg"
 USER_ID = "userId"
+FCM_CREDENTIALS = "fcm_credentials"
 
 # Package types
 PKG_IDS_HYYP = "com.hyyp247.home"
@@ -31,3 +32,6 @@ SERVICE_STAY_PROFILE_ARM = "stay_profile_arm"
 # Attributes
 ATTR_BYPASS_CODE = "bypass_code"
 ATTR_ARM_CODE = "arm_code"
+
+
+FCM_PERSISTENTIDFILE = '/share/ids_hyyp_persistent_ids.json'

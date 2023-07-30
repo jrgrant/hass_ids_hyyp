@@ -24,7 +24,9 @@ from .const import (
     PKG_ADT_SECURE_HOME,
     PKG_IDS_HYYP,
     PKG_ADT_ALIAS,
-    PGK_IDS_HYYP_ALIAS
+    PGK_IDS_HYYP_ALIAS,
+    FCM_PERSISTENTIDFILE,
+    FCM_CREDENTIALS
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -33,11 +35,17 @@ DEFAULT_OPTIONS = {
 }
 
 
+def _initialize_push_receiver():
+    fcmfile = open(FCM_PERSISTENTIDFILE, "w")
+    fcmfile.close()
+    
 def _validate_and_create_auth(data: dict) -> dict[str, Any]:
     """Try to login to IDS Hyyp account and return token."""
     # Verify cloud credentials by attempting a login request with username and password.
     # Return login token.
 
+    _initialize_push_receiver()
+    
     hyyp_client = HyypClient(
         data[CONF_EMAIL],
         data[CONF_PASSWORD],
@@ -45,8 +53,9 @@ def _validate_and_create_auth(data: dict) -> dict[str, Any]:
     )
 
     hyyp_token = hyyp_client.login()
+    fcm_token = hyyp_client.get_intial_fcm_credentials()
 
-    return {CONF_TOKEN: hyyp_token[CONF_TOKEN], CONF_PKG: data[CONF_PKG], USER_ID: hyyp_token["user"]["id"]}
+    return {CONF_TOKEN: hyyp_token[CONF_TOKEN], CONF_PKG: data[CONF_PKG], USER_ID: hyyp_token["user"]["id"], FCM_CREDENTIALS: fcm_token}
 
 
 class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -96,7 +105,7 @@ class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
                     title=user_input[CONF_EMAIL],
                     data=token_data,
                     options=DEFAULT_OPTIONS,
-                )
+                )    
 
         data_schema = {
                 vol.Required(CONF_EMAIL): str,
