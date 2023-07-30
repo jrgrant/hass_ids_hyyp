@@ -18,6 +18,7 @@ from .const import (
     DEFAULT_TIMEOUT,
     DOMAIN,
     FCM_CREDENTIALS,
+    IMEI,
 )
 from .coordinator import HyypDataUpdateCoordinator
 
@@ -45,7 +46,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         hass.config_entries.async_update_entry(entry, options=options)
 
-    hyyp_client = HyypClient(token=entry.data[CONF_TOKEN], pkg=entry.data[CONF_PKG], userid=entry.data[USER_ID], fcm_credentials=entry.data[FCM_CREDENTIALS])
+    hyyp_client = HyypClient(token=entry.data[CONF_TOKEN],
+                             pkg=entry.data[CONF_PKG],
+                             userid=entry.data[USER_ID],
+                             fcm_credentials=entry.data[FCM_CREDENTIALS],
+                             imei=entry.data[IMEI],
+                             )
 
     coordinator = HyypDataUpdateCoordinator(
         hass, api=hyyp_client, api_timeout=entry.options[CONF_TIMEOUT]

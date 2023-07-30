@@ -74,7 +74,7 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         short_json = data["notification"]["data"]["notification"]
         if type(short_json) == str:
             short_json = json.loads(short_json)
-        message = str(short_json["title"]) + " " + str(short_json["body"])
+        message = str(short_json) #temp string workaround
         self._update_notification_entity(message) 
     
     def _update_notification_entity(self, data):

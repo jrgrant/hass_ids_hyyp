@@ -26,7 +26,8 @@ from .const import (
     PKG_ADT_ALIAS,
     PGK_IDS_HYYP_ALIAS,
     FCM_PERSISTENTIDFILE,
-    FCM_CREDENTIALS
+    FCM_CREDENTIALS,
+    IMEI
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -46,16 +47,25 @@ def _validate_and_create_auth(data: dict) -> dict[str, Any]:
 
     _initialize_push_receiver()
     
+    imei = str(HyypClient().generate_imei())
+    
     hyyp_client = HyypClient(
         data[CONF_EMAIL],
         data[CONF_PASSWORD],
         data[CONF_PKG],
+        imei=imei
     )
 
     hyyp_token = hyyp_client.login()
     fcm_token = hyyp_client.get_intial_fcm_credentials()
 
-    return {CONF_TOKEN: hyyp_token[CONF_TOKEN], CONF_PKG: data[CONF_PKG], USER_ID: hyyp_token["user"]["id"], FCM_CREDENTIALS: fcm_token}
+    
+    return {CONF_TOKEN: hyyp_token[CONF_TOKEN], 
+            CONF_PKG: data[CONF_PKG],
+            USER_ID: hyyp_token["user"]["id"],
+            FCM_CREDENTIALS: fcm_token,
+            IMEI: imei
+            }
 
 
 class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -86,7 +96,7 @@ class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
                 token_data = await self.hass.async_add_executor_job(
                     _validate_and_create_auth, user_input
                 )
-
+            
             except InvalidURL:
                 errors["base"] = "invalid_host"
 

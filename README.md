@@ -140,6 +140,13 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.5.0 b2**
+- If you are upgrading from any version then you **MUST** re-add the integration to load the new configuration settings.
+- Hotfix, prevent crash on various message structures.
+    - Notification providing a more RAW json string.
+    - Added IMEI generation to create unique IMEIs. (FCM may be linked to IMEI as well - TBC)
+- Pulled 1.5.0 b1 due to large issue
+
 **Version 1.5.0 b1**
 
 - If you are upgrading from  1.4.x or earlier then you **MUST** re-add the integration to load the new configuration settings.

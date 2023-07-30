@@ -8,6 +8,7 @@ MODEL = "Hyyp"
 CONF_PKG = "pkg"
 USER_ID = "userId"
 FCM_CREDENTIALS = "fcm_credentials"
+IMEI = "imei"
 
 # Package types
 PKG_IDS_HYYP = "com.hyyp247.home"
