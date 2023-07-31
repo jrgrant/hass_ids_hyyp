@@ -3,6 +3,7 @@ IDS Hyyp integration for Home Assistant
 
 
 ![Release](https://img.shields.io/github/v/release/hawky358/hass_ids_hyyp?label=Main%20Release)
+![Test Version](https://img.shields.io/github/v/release/hawky358/hass_ids_hyyp?label=Test%20version&color=f48041&include_prereleases)
 
 ![Installs](https://img.shields.io/badge/dynamic/json?color=41BDF5&logo=home-assistant&label=integration%20usage&suffix=%20installs&cacheSeconds=86400&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.ids_hyyp.total)
 
@@ -165,6 +166,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 **Version 1.4.1 b1**
 - Version bump only to prevent debug version from being latest and people "upgrading" to the debug version.
+- Identical to 1.4.0 b3
 
 **Version 1.4.0 b3**
 
