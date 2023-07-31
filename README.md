@@ -140,6 +140,12 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.5.0 b3**
+- Converted the notification message to json for easier processing on Home assistant side.
+- Added timestamp to notification message to ensure "identical" notifications trigger every time
+- Minor Refactoring
+
+
 **Version 1.5.0 b2**
 - If you are upgrading from any version then you **MUST** re-add the integration to load the new configuration settings.
 - Hotfix, prevent crash on various message structures.
