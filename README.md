@@ -141,6 +141,10 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.5.0 b4**
+- Created reconnect and ping function in API to keep notification messages.
+
+
 **Version 1.5.0 b3**
 - Converted the notification message to json for easier processing on Home assistant side.
 - Added timestamp to notification message to ensure "identical" notifications trigger every time
