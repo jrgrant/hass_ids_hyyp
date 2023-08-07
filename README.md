@@ -141,6 +141,10 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+
+**Version 1.5.0 b5**
+- FCM Heartbeat was incorrectly implemented in original code. Fixed API ping method, now properly sends correct heartbeat ping and ack packets and doesn't reconnect every time. (Api Update)
+
 **Version 1.5.0 b4**
 - Created reconnect and ping function in API to keep notification messages.
 
