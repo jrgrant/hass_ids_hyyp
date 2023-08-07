@@ -13,7 +13,7 @@ from .const import DATA_COORDINATOR, DOMAIN
 from .coordinator import HyypDataUpdateCoordinator
 from .entity import HyypSiteEntity, HyypPartitionEntity
 
-PARALLEL_UPDATES = 1
+
 
 BINARY_SENSOR_TYPES: dict[str, BinarySensorEntityDescription] = {
     "isMaster": BinarySensorEntityDescription(key="isMaster"),
@@ -21,7 +21,7 @@ BINARY_SENSOR_TYPES: dict[str, BinarySensorEntityDescription] = {
     "isOnline": BinarySensorEntityDescription(key="isOnline"),
 }
 
-
+PARALLEL_UPDATES = 1
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
@@ -31,29 +31,23 @@ async def async_setup_entry(
     ]
 
     async_add_entities(
-
         [
             HyypSensor(coordinator, site_id, sensor)
             for site_id in coordinator.data
             for sensor, value in coordinator.data[site_id].items()
             if sensor in BINARY_SENSOR_TYPES
-            if value is not None
-            
+            if value is not None        
         ]
-
     )
     
-    
+### Remove soon   
     async_add_entities(
-        
-        [
-            
+        [     
             HyypZoneTriggerSensor(coordinator, site_id, partition_id, zone_id)
             for site_id in coordinator.data
             for partition_id in coordinator.data[site_id]["partitions"]
             for zone_id in coordinator.data[site_id]["partitions"][partition_id]["zones"]
-            if 'triggered' in coordinator.data[site_id]["partitions"][partition_id]["zones"][zone_id]
-            
+            if 'triggered' in coordinator.data[site_id]["partitions"][partition_id]["zones"][zone_id]         
         ]
     )
 

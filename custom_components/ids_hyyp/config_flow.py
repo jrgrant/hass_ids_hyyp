@@ -19,6 +19,7 @@ from .const import (
     ATTR_ARM_CODE,
     ATTR_BYPASS_CODE,
     CONF_PKG,
+    USER_ID,
     DOMAIN,
     PKG_ADT_SECURE_HOME,
     PKG_IDS_HYYP,
@@ -45,7 +46,7 @@ def _validate_and_create_auth(data: dict) -> dict[str, Any]:
 
     hyyp_token = hyyp_client.login()
 
-    return {CONF_TOKEN: hyyp_token[CONF_TOKEN], CONF_PKG: data[CONF_PKG]}
+    return {CONF_TOKEN: hyyp_token[CONF_TOKEN], CONF_PKG: data[CONF_PKG], USER_ID: hyyp_token["user"]["id"]}
 
 
 class HyypConfigFlow(ConfigFlow, domain=DOMAIN):

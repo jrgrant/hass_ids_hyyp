@@ -6,6 +6,7 @@ MODEL = "Hyyp"
 
 # Configuration
 CONF_PKG = "pkg"
+USER_ID = "userId"
 
 # Package types
 PKG_IDS_HYYP = "com.hyyp247.home"

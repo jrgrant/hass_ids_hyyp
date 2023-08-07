@@ -12,7 +12,7 @@ from .const import DATA_COORDINATOR, DOMAIN
 from .coordinator import HyypDataUpdateCoordinator
 from .entity import HyypSiteEntity, HyypPartitionEntity
 
-PARALLEL_UPDATES = 1
+
 
 SENSOR_TYPES: dict[str, SensorEntityDescription] = {
     "lastNoticeTime": SensorEntityDescription(key="lastNoticeTime"),
@@ -20,7 +20,7 @@ SENSOR_TYPES: dict[str, SensorEntityDescription] = {
     "imei": SensorEntityDescription(key="imei"),
 }
 
-
+PARALLEL_UPDATES = 1
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:

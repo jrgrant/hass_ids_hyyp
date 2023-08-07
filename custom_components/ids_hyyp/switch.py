@@ -16,7 +16,7 @@ from .const import ATTR_BYPASS_CODE, DATA_COORDINATOR, DOMAIN, SERVICE_BYPASS_ZO
 from .coordinator import HyypDataUpdateCoordinator
 from .entity import HyypPartitionEntity
 
-
+PARALLEL_UPDATES = 1
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
@@ -75,6 +75,29 @@ class HyypSwitch(HyypPartitionEntity, SwitchEntity):
     def is_on(self) -> bool:
         """Return the state of the switch."""
         return not self.partition_data["zones"][self._zone_id]["bypassed"]
+    
+    @property
+    def extra_state_attributes(self):
+        
+        violated = False
+        tampered = False
+        triggered = False
+        stay_bypassed = False
+        if "openviolated" in self.partition_data["zones"][self._zone_id]:
+            violated = bool(self.partition_data["zones"][self._zone_id]["openviolated"])
+        if "tampered"  in self.partition_data["zones"][self._zone_id]:
+            tampered = bool(self.partition_data["zones"][self._zone_id]["tampered"])
+        if "stay_bypassed" in self.partition_data["zones"][self._zone_id]:
+            stay_bypassed = bool(self.partition_data["zones"][self._zone_id]["stay_bypassed"])
+        if "triggered" in self.partition_data["zones"][self._zone_id]:
+            triggered = bool(self.partition_data["zones"][self._zone_id]["triggered"])
+        state = {"violated" : violated,
+                 "tampered" : tampered,
+                 "triggered" : triggered,
+                 "stay_bypassed" : stay_bypassed,
+                 }
+        return state
+    
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch entity on."""
