@@ -37,7 +37,7 @@ IDS Hyyp integration for Home Assistant
         *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. These sensor attributes may therefore be up to 30 seconds "late"*
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, implemented directly from IDS server feedback)
-        - `triggered` - Will show `True` when the zone is triggered during armed state. This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor (Not that `binary_sensor.[zone_name]_trigger` will be removed in a future release, please update your code if you are using this sensor)
+        - `triggered` - Will show `True` when the zone is triggered during armed state. This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor (Note that `binary_sensor.[zone_name]_trigger` will be removed in a future release, please update your code if you are using this sensor)
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active.
 
 
