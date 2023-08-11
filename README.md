@@ -34,8 +34,9 @@ IDS Hyyp integration for Home Assistant
         - `FALSE` / `OFF` : Zone is OFF i.e. bypassed (This will also show off if the zone is bypassed as part of a stay profile)
     - `switch.[zone_name]` has several attributes which gives further information regarding the zone
     
-        *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. These sensor attributes may therefore be up to 30 seconds "late"*
+        *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. These sensor attributes may therefore be up to 30 seconds "late" or "missed"*
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
+            -  The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared or polled by the IDS server.
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, implemented directly from IDS server feedback)
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active.
         - `triggered` - Will show `True` when the zone is triggered during armed state. 
