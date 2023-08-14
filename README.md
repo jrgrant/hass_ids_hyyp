@@ -59,7 +59,7 @@ IDS Hyyp integration for Home Assistant
     - Creates a `button.[site_name]_[automation_name]` button entity. This entity pushes the "automation" button similar to pushing the button in the IDS app.
 
     <br><br>
-- Shows which zone triggered an alarm **THIS FEATURE WILL BE DEPRECATED IT IS REPLACED BY THE SWITCH ATTRIBUTES EXPLAINED ABOVE**
+- Shows which zone triggered an alarm **THIS FEATURE IS DEPRECATED. IT IS REPLACED BY THE SWITCH ATTRIBUTES EXPLAINED ABOVE**
     - Creates a `binary_sensor.[zone_name]_trigger` binary sensor entity. If the alarm is triggered, this entity changes to TRUE on the zone that triggered the alarm.
         - The sensor binary_sensor.[zone name]_trigger is normally FALSE.
         - If the alarm triggers this binary sensor will turn to TRUE on the zone that has triggered the alarm.  
@@ -151,6 +151,8 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.5.0 b6**
+- Version bump to align with current Github status
 
 **Version 1.5.0 b5**
 - FCM Heartbeat was incorrectly implemented in original code. Fixed API ping method, now properly sends correct heartbeat ping and ack packets and doesn't reconnect every time. (Api Update)
@@ -182,15 +184,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
     - You **MUST** restart Home Assistant once after re-adding the integration.
 
 
-**Version 1.4.1 b1**
-- Version bump only to prevent debug version from being latest and people "upgrading" to the debug version.
-- Identical to 1.4.0 b3
-
-**Version 1.4.0 b3**
-
-- Added fix to prevent crash when no Zone information is received.
-
-**Version 1.4.0 b2**
+**Version 1.4.1**
 
 - If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
 - **`binary_sensor.[zone_name]_trigger` will be removed soon, please update necessary code per below.**
@@ -200,7 +194,6 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, by implemented directly from IDS feedback)
         - `triggered` - Will show `True` when the zone is triggered during armed state. This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active
-- When a "Stay Profile" is armed the zones which are bypassed as part of this profile will now show as bypassed. i.e. `switch.[zone_name]` will go `OFF` (API Change)
 - Changed the API refresh requests to series. This makes the replies more reliable when multiple actions are performed.
 
 **Version 1.3.4**
