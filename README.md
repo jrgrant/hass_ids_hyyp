@@ -25,11 +25,19 @@ IDS Hyyp integration for Home Assistant
         - `TRUE` / `ON` : Zone is ON i.e. not bypassed
         - `FALSE` / `OFF` : Zone is OFF i.e. bypassed (This will also show off if the zone is bypassed as part of a stay profile)
     - `switch.[zone_name]` has several attributes which gives further information regarding the zone
+    
+        *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. These sensor attributes may therefore be up to 30 seconds "late" or "missed"*
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
+            
+            *The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared or polled by the IDS server.*
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, implemented directly from IDS server feedback)
-        - `triggered` - Will show `True` when the zone is triggered during armed state. This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor (Not that `binary_sensor.[zone_name]_trigger` will be removed in a future release, please update your code if you are using this sensor)
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active.
+        - `triggered` - Will show `True` when the zone is triggered during armed state. 
+            - The `triggered` attribute normally `False`.
+            - If the alarm triggers, this attribute will turn `True` on the zone that has triggered the alarm.  
+            - The sensor will remain `True` for 1 to 2 update cycles (depending on poll timing) and then go back to `False`  
 
+            This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor (Note that `binary_sensor.[zone_name]_trigger` will be removed in a future release, please update your code if you are using this sensor)
 
 
 
@@ -41,7 +49,9 @@ IDS Hyyp integration for Home Assistant
 - IDS "Automations" / "Triggers".  
     *"Automations" is the term used in the IDS app to activate programmable outputs e.g. to open your gate or garage door. The IDS app also calls it "Triggers"*
     - Creates a `button.[site_name]_[automation_name]` button entity. This entity pushes the "automation" button similar to pushing the button in the IDS app.
-- Shows which zone triggered an alarm **THIS FEATURE WILL BE DEPRECATED IT IS REPLACED BY THE SWITCH ATTRIBUTES**
+
+    <br><br>
+- Shows which zone triggered an alarm **THIS FEATURE IS DEPRECATED. IT IS REPLACED BY THE SWITCH ATTRIBUTES EXPLAINED ABOVE**
     - Creates a `binary_sensor.[zone_name]_trigger` binary sensor entity. If the alarm is triggered, this entity changes to TRUE on the zone that triggered the alarm.
         - The sensor binary_sensor.[zone name]_trigger is normally FALSE.
         - If the alarm triggers this binary sensor will turn to TRUE on the zone that has triggered the alarm.  
@@ -133,7 +143,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.4.1 RC1**
+**Version 1.4.1 **
 
 - If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
 - **`binary_sensor.[zone_name]_trigger` will be removed soon, please update necessary code per below.**
