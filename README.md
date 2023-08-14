@@ -36,7 +36,8 @@ IDS Hyyp integration for Home Assistant
     
         *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. These sensor attributes may therefore be up to 30 seconds "late" or "missed"*
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
-            -  The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared or polled by the IDS server.
+            
+            *The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared or polled by the IDS server.*
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, implemented directly from IDS server feedback)
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active.
         - `triggered` - Will show `True` when the zone is triggered during armed state. 
@@ -56,7 +57,9 @@ IDS Hyyp integration for Home Assistant
 - IDS "Automations" / "Triggers".  
     *"Automations" is the term used in the IDS app to activate programmable outputs e.g. to open your gate or garage door. The IDS app also calls it "Triggers"*
     - Creates a `button.[site_name]_[automation_name]` button entity. This entity pushes the "automation" button similar to pushing the button in the IDS app.
-- Shows which zone triggered an alarm **THIS FEATURE WILL BE DEPRECATED IT IS REPLACED BY THE SWITCH ATTRIBUTES**
+
+    <br><br>
+- Shows which zone triggered an alarm **THIS FEATURE WILL BE DEPRECATED IT IS REPLACED BY THE SWITCH ATTRIBUTES EXPLAINED ABOVE**
     - Creates a `binary_sensor.[zone_name]_trigger` binary sensor entity. If the alarm is triggered, this entity changes to TRUE on the zone that triggered the alarm.
         - The sensor binary_sensor.[zone name]_trigger is normally FALSE.
         - If the alarm triggers this binary sensor will turn to TRUE on the zone that has triggered the alarm.  
