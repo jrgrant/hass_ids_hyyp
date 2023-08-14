@@ -143,7 +143,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.4.1 **
+**Version 1.4.1**
 
 - If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
 - **`binary_sensor.[zone_name]_trigger` will be removed soon, please update necessary code per below.**
@@ -153,7 +153,6 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, by implemented directly from IDS feedback)
         - `triggered` - Will show `True` when the zone is triggered during armed state. This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active
-- When a "Stay Profile" is armed the zones which are bypassed as part of this profile will now show as bypassed. i.e. `switch.[zone_name]` will go `OFF` (API Change)
 - Changed the API refresh requests to series. This makes the replies more reliable when multiple actions are performed.
 
 **Version 1.3.4**
