@@ -151,6 +151,11 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+
+**Version 1.5.0 b7**
+- Added exception catch to ping on push notifications
+- Further ping and reconnect optimizations
+
 **Version 1.5.0 b6**
 - Version bump to align with current Github status
 
