@@ -151,6 +151,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.5.0 b8**
+- Added a method to completely restart the notification system.
+- Fixed an issue where FCM Notifications (API Bump) would get stuck in an infinite loop causing high CPU usage when the expected message is larger than the actual message.
 
 **Version 1.5.0 b7**
 - Added exception catch to ping on push notifications

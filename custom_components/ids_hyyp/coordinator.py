@@ -60,11 +60,14 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         pids = raw_info.split("\n")
         return pids
     
-    def _update_fcm_data(self, data):
-        #_LOGGER.warning(data)       
+    def _update_fcm_data(self, data):        
+        if data == "restart_push_receiver":     
+            pids = self._read_fcm_pids()
+            self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data, persistent_pids=pids)
+            return
         if "new_persistent_id" in data:
             newid = data["new_persistent_id"]
-            self._append_fcm_pids(pid=newid)
+            self._append_fcm_pids(pid=newid)           
         if "notification" not in data:
             return
         if "data" not in data["notification"]:
