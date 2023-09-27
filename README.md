@@ -151,40 +151,15 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.5.0 b8**
-- Added a method to completely restart the notification system.
-- Fixed an issue where FCM Notifications (API Bump) would get stuck in an infinite loop causing high CPU usage when the expected message is larger than the actual message.
+**Version 1.5.1**
 
-**Version 1.5.0 b7**
-- Added exception catch to ping on push notifications
-- Further ping and reconnect optimizations
-
-**Version 1.5.0 b6**
-- Version bump to align with current Github status
-
-**Version 1.5.0 b5**
-- FCM Heartbeat was incorrectly implemented in original code. Fixed API ping method, now properly sends correct heartbeat ping and ack packets and doesn't reconnect every time. (Api Update)
-
-**Version 1.5.0 b4**
-- Created reconnect and ping function in API to keep notification messages.
+- If you are upgrading from 1.5.0 or earlier then you **MUST** re-add the integration to load the new configuration settings.
+- Implemented several fixes to the push notification system to prevent infinite loop and high CPU usage
+- Implemented better heatbeat and reconnect systems.
 
 
-**Version 1.5.0 b3**
-- Converted the notification message to json for easier processing on Home assistant side.
-- Added timestamp to notification message to ensure "identical" notifications trigger every time
-- Minor Refactoring
+**Version 1.5.0**
 
-
-**Version 1.5.0 b2**
-- If you are upgrading from any version then you **MUST** re-add the integration to load the new configuration settings.
-- Hotfix, prevent crash on various message structures.
-    - Notification providing a more RAW json string.
-    - Added IMEI generation to create unique IMEIs. (FCM may be linked to IMEI as well - TBC)
-- Pulled 1.5.0 b1 due to large issue
-
-**Version 1.5.0 b1**
-
-- If you are upgrading from  1.4.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
 - Implemented "Cell Phone" type "Push Notifications" 
     - These are similar to the "Notifications" that you receive on your cellphone e.g. when disarming or alarm trigger. 
     - Whenever a new message comes through, the summary is now displayed in `sensor.[site]_ids_push_notifications`
