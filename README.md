@@ -151,11 +151,15 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.5.2**
+
+- Final(tm) fix for high cpu usage / infinite loop issue on push notification system
+
 **Version 1.5.1**
 
 - If you are upgrading from 1.5.0 or earlier then you **MUST** re-add the integration to load the new configuration settings.
 - Implemented several fixes to the push notification system to prevent infinite loop and high CPU usage
-- Implemented better heatbeat and reconnect systems.
+- Implemented better heatbeat and reconnect methods for the push notification system.
 
 
 **Version 1.5.0**
