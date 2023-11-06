@@ -25,7 +25,6 @@ from .const import (
     PKG_IDS_HYYP,
     PKG_ADT_ALIAS,
     PGK_IDS_HYYP_ALIAS,
-    FCM_PERSISTENTIDFILE,
     FCM_CREDENTIALS,
     IMEI
 )
@@ -35,31 +34,21 @@ DEFAULT_OPTIONS = {
     CONF_TIMEOUT: DEFAULT_TIMEOUT,
 }
 
-
-def _initialize_push_receiver():
-    fcmfile = open(FCM_PERSISTENTIDFILE, "w")
-    fcmfile.close()
     
 def _validate_and_create_auth(data: dict) -> dict[str, Any]:
     """Try to login to IDS Hyyp account and return token."""
     # Verify cloud credentials by attempting a login request with username and password.
     # Return login token.
-
-    _initialize_push_receiver()
-    
     imei = str(HyypClient().generate_imei())
-    
     hyyp_client = HyypClient(
         data[CONF_EMAIL],
         data[CONF_PASSWORD],
         data[CONF_PKG],
         imei=imei
     )
-
     hyyp_token = hyyp_client.login()
     fcm_token = hyyp_client.get_intial_fcm_credentials()
 
-    
     return {CONF_TOKEN: hyyp_token[CONF_TOKEN], 
             CONF_PKG: data[CONF_PKG],
             USER_ID: hyyp_token["user"]["id"],

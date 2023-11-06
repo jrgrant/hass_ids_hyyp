@@ -33,6 +33,3 @@ SERVICE_STAY_PROFILE_ARM = "stay_profile_arm"
 # Attributes
 ATTR_BYPASS_CODE = "bypass_code"
 ATTR_ARM_CODE = "arm_code"
-
-
-FCM_PERSISTENTIDFILE = '/share/ids_hyyp_persistent_ids.json'

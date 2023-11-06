@@ -12,7 +12,7 @@ from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError, InvalidURL
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DOMAIN, FCM_PERSISTENTIDFILE
+from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,8 +31,7 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=update_interval)
 
-        pids = self._read_fcm_pids()
-        self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data, persistent_pids=pids)
+        self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data)
 
     async def _async_update_data(self) -> dict[Any, Any]:
         """Fetch data from IDS Hyyp."""
@@ -46,28 +45,11 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
 
         except (InvalidURL, HTTPError, HyypApiError) as error:
             raise UpdateFailed(f"Invalid response from API: {error}") from error
-
-    
-    def _append_fcm_pids(self, pid):
-        pid = str(pid)
-        pidfile = open(FCM_PERSISTENTIDFILE, "a" )
-        pidfile.write(pid + "\n")
-        pidfile.close()
-        
-    def _read_fcm_pids(self):
-        pidfile = open(FCM_PERSISTENTIDFILE, "r")
-        raw_info = pidfile.read()
-        pids = raw_info.split("\n")
-        return pids
     
     def _update_fcm_data(self, data):        
         if data == "restart_push_receiver":     
-            pids = self._read_fcm_pids()
-            self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data, persistent_pids=pids)
-            return
-        if "new_persistent_id" in data:
-            newid = data["new_persistent_id"]
-            self._append_fcm_pids(pid=newid)           
+            self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data)
+            return         
         if "notification" not in data:
             return
         if "data" not in data["notification"]:
