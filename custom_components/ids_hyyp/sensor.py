@@ -71,7 +71,7 @@ class HyypPushNotificationSensor(HyypSiteEntity, SensorEntity):
         self._attr_name = f"{self.data['name']} IDS Push Notifications"
         self._attr_unique_id = f"{self.data['name']}_IDS_push_notifications_sensor"
         self.value = None
-        self.coordinator._regisiter_callback_for_notification_entity(self._update_callback)
+        self.coordinator._regisiter_callback_for_push_notification_entity(self._update_callback)
 
 
     def _update_callback(self, data):

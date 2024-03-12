@@ -61,11 +61,11 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
             short_json = json.loads(short_json)
         short_json["timestamp"] = time.time() 
         message = json.dumps(short_json)
-        self._update_notification_entity(message) 
+        self._update_push_notification_entity(message) 
     
-    def _update_notification_entity(self, data):
+    def _update_push_notification_entity(self, data):
         for callback in self.push_notification_entity_callback_methods:
             callback(data=data)
         
-    def _regisiter_callback_for_notification_entity(self, callback):
+    def _regisiter_callback_for_push_notification_entity(self, callback):
         self.push_notification_entity_callback_methods.append(callback)     
