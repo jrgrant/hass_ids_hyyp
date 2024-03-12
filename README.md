@@ -151,6 +151,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.5.4**
+- Internal function rename for clarity
+
 **Version 1.5.3**
 
 - No longer saving persistent IDs on drive. PIDs will no longer survive a restart, this should fix an issue where specific folder access isn't available on HASS "Container" versions
