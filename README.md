@@ -153,6 +153,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 **Version 1.5.4**
 - Internal function rename for clarity
+- Minor changes to align with ruff guidelines
 
 **Version 1.5.3**
 

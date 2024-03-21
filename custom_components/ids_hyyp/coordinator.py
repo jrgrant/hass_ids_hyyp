@@ -57,7 +57,7 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         if "notification" not in data["notification"]["data"]:
             return
         short_json = data["notification"]["data"]["notification"]
-        if type(short_json) == str:
+        if isinstance(short_json, str):
             short_json = json.loads(short_json)
         short_json["timestamp"] = time.time() 
         message = json.dumps(short_json)
