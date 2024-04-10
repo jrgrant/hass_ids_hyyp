@@ -46,6 +46,54 @@ async def async_setup_entry(
             for partition_id in coordinator.data[site_id]["partitions"]
         ]
     )
+    
+    async_add_entities(
+        [
+            HyypPushNotificationSensor(coordinator, site_id)
+            for site_id in coordinator.data
+        ]
+    )
+
+
+
+class HyypPushNotificationSensor(HyypSiteEntity, SensorEntity):
+    """Representation of a IDS Hyyp sensor."""
+
+    coordinator: HyypDataUpdateCoordinator
+
+    def __init__(
+        self,
+        coordinator: HyypDataUpdateCoordinator,
+        site_id: int,
+    ) -> None:
+        """Initialize the sensor."""
+        super().__init__(coordinator, site_id)
+        self._attr_name = f"{self.data['name']} IDS Push Notifications"
+        self._attr_unique_id = f"{self.data['name']}_IDS_push_notifications_sensor"
+        self.value = None
+        self.coordinator._regisiter_callback_for_push_notification_entity(self._update_callback)
+
+
+    def _update_callback(self, data):
+        self.value = data
+        self.schedule_update_ha_state()
+
+    @property
+    def native_value(self) -> Any:
+        """Return the state of the sensor."""
+        return self.value
+
+    @property
+    def should_poll(self):
+
+        return False
+
+
+
+
+
+
+
 
 
 class HyypSensor(HyypSiteEntity, SensorEntity):

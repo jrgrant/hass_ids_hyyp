@@ -93,7 +93,7 @@ class HyypStayArmButton(HyypPartitionEntity, ButtonEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError(f"Failed to arm  {self._attr_name}") from err
 
-        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] == None)):
+        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] is None)):
             await self.coordinator.async_request_refresh()
 
         else:
@@ -117,7 +117,7 @@ class HyypStayArmButton(HyypPartitionEntity, ButtonEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError(f"Failed to push button {self._attr_name}") from err
 
-        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] == None)):
+        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] is None)):
             await self.coordinator.async_request_refresh()
 
         else:
@@ -159,7 +159,7 @@ class HyypAutomationButton(HyypSiteEntity, ButtonEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError(f"Failed to push button {self._attr_name}") from err
 
-        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] == None)):
+        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] is None)):
             await self.coordinator.async_request_refresh()
 
         else:
@@ -180,7 +180,7 @@ class HyypAutomationButton(HyypSiteEntity, ButtonEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError(f"Failed to push button {self._attr_name}") from err
 
-        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] == None)):
+        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] is None)):
             await self.coordinator.async_request_refresh()
 
         else:

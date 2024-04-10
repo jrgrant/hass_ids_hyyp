@@ -18,6 +18,14 @@ IDS Hyyp integration for Home Assistant
 
 # Features
 
+
+- Supports "Cell phone" type push notifications from IDS. These are the same as the notifications that you'd normally receive on your cellphone
+    - Notification summary is shown in `sensor.[site]_ids_push_notifications`
+    - You can for example add a push notification automation to get "instant" notifications similar to the IDS app.
+
+
+
+
 - Supports multiple sites and multiple partitions which are linked to your IDS Hyyp account.
 - Supports the "Alarm Control Panel" entity which is part of home assistant
 - Bypass of individual zones via switch entities
@@ -143,6 +151,35 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.5.4**
+- Internal function rename for clarity
+- Minor changes to align with ruff guidelines
+
+**Version 1.5.3**
+
+- No longer saving persistent IDs on drive. PIDs will no longer survive a restart, this should fix an issue where specific folder access isn't available on HASS "Container" versions
+- Added integration type in manifest (Home assistant deprecating "default")
+
+**Version 1.5.2**
+
+- Final(tm) fix for high cpu usage / infinite loop issue on push notification system
+
+**Version 1.5.1**
+
+- If you are upgrading from 1.5.0 or earlier then you **MUST** re-add the integration to load the new configuration settings.
+- Implemented several fixes to the push notification system to prevent infinite loop and high CPU usage
+- Implemented better heatbeat and reconnect methods for the push notification system.
+
+
+**Version 1.5.0**
+
+- Implemented "Cell Phone" type "Push Notifications" 
+    - These are similar to the "Notifications" that you receive on your cellphone e.g. when disarming or alarm trigger. 
+    - Whenever a new message comes through, the summary is now displayed in `sensor.[site]_ids_push_notifications`
+    - Limited testing has been done and reporting method and text may change.
+    - You **MUST** restart Home Assistant once after re-adding the integration.
+
+
 **Version 1.4.1**
 
 - If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
@@ -166,7 +203,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ![Alt text](images/configflowchange.png)
 
 **Version 1.3.2**
-- Fixed a bug where ADT systems wouldn't load due to "triggered zones" not being available from the IDS server. The triggered zone feature (1.3.0) is been removed if no trigger information is received (ADT Systems)
+- Fixed a bug where ADT systems wouldn't load due to "triggered zones" not being available from the IDS server. The triggered zone feature (1.3.0) is removed if no trigger information is received (ADT Systems)
 - Bumped API dependency to the debug enabled API
 
 **Version 1.3.1**

@@ -24,7 +24,9 @@ from .const import (
     PKG_ADT_SECURE_HOME,
     PKG_IDS_HYYP,
     PKG_ADT_ALIAS,
-    PGK_IDS_HYYP_ALIAS
+    PGK_IDS_HYYP_ALIAS,
+    FCM_CREDENTIALS,
+    IMEI
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -32,21 +34,27 @@ DEFAULT_OPTIONS = {
     CONF_TIMEOUT: DEFAULT_TIMEOUT,
 }
 
-
+    
 def _validate_and_create_auth(data: dict) -> dict[str, Any]:
     """Try to login to IDS Hyyp account and return token."""
     # Verify cloud credentials by attempting a login request with username and password.
     # Return login token.
-
+    imei = str(HyypClient().generate_imei())
     hyyp_client = HyypClient(
         data[CONF_EMAIL],
         data[CONF_PASSWORD],
         data[CONF_PKG],
+        imei=imei
     )
-
     hyyp_token = hyyp_client.login()
+    fcm_token = hyyp_client.get_intial_fcm_credentials()
 
-    return {CONF_TOKEN: hyyp_token[CONF_TOKEN], CONF_PKG: data[CONF_PKG], USER_ID: hyyp_token["user"]["id"]}
+    return {CONF_TOKEN: hyyp_token[CONF_TOKEN], 
+            CONF_PKG: data[CONF_PKG],
+            USER_ID: hyyp_token["user"]["id"],
+            FCM_CREDENTIALS: fcm_token,
+            IMEI: imei
+            }
 
 
 class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -77,7 +85,7 @@ class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
                 token_data = await self.hass.async_add_executor_job(
                     _validate_and_create_auth, user_input
                 )
-
+            
             except InvalidURL:
                 errors["base"] = "invalid_host"
 
@@ -96,7 +104,7 @@ class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
                     title=user_input[CONF_EMAIL],
                     data=token_data,
                     options=DEFAULT_OPTIONS,
-                )
+                )    
 
         data_schema = {
                 vol.Required(CONF_EMAIL): str,

@@ -2,6 +2,8 @@
 from datetime import timedelta
 import logging
 from typing import Any
+import json
+import time
 
 from async_timeout import timeout
 from pyhyypapihawkmod.client import HyypClient
@@ -25,11 +27,16 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         self.hyyp_client = api
         self._api_timeout = api_timeout
         update_interval = timedelta(seconds=30)
-
+        self.push_notification_entity_callback_methods = []
+        
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=update_interval)
+
+        self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data)
 
     async def _async_update_data(self) -> dict[Any, Any]:
         """Fetch data from IDS Hyyp."""
+ 
+
         try:
             async with timeout(self._api_timeout):
                 return await self.hass.async_add_executor_job(
@@ -38,3 +45,27 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
 
         except (InvalidURL, HTTPError, HyypApiError) as error:
             raise UpdateFailed(f"Invalid response from API: {error}") from error
+    
+    def _update_fcm_data(self, data):        
+        if data == "restart_push_receiver":     
+            self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data)
+            return         
+        if "notification" not in data:
+            return
+        if "data" not in data["notification"]:
+            return
+        if "notification" not in data["notification"]["data"]:
+            return
+        short_json = data["notification"]["data"]["notification"]
+        if isinstance(short_json, str):
+            short_json = json.loads(short_json)
+        short_json["timestamp"] = time.time() 
+        message = json.dumps(short_json)
+        self._update_push_notification_entity(message) 
+    
+    def _update_push_notification_entity(self, data):
+        for callback in self.push_notification_entity_callback_methods:
+            callback(data=data)
+        
+    def _regisiter_callback_for_push_notification_entity(self, callback):
+        self.push_notification_entity_callback_methods.append(callback)     
