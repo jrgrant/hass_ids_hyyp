@@ -39,19 +39,7 @@ async def async_setup_entry(
             if value is not None        
         ]
     )
-    
-### Remove soon   
-    async_add_entities(
-        [     
-            HyypZoneTriggerSensor(coordinator, site_id, partition_id, zone_id)
-            for site_id in coordinator.data
-            for partition_id in coordinator.data[site_id]["partitions"]
-            for zone_id in coordinator.data[site_id]["partitions"][partition_id]["zones"]
-            if 'triggered' in coordinator.data[site_id]["partitions"][partition_id]["zones"][zone_id]         
-        ]
-    )
-
-
+   
 class HyypSensor(HyypSiteEntity, BinarySensorEntity):
     """Representation of a IDS Hyyp sensor."""
 

@@ -40,12 +40,16 @@ IDS Hyyp integration for Home Assistant
             *The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared or polled by the IDS server.*
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, implemented directly from IDS server feedback)
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active.
-        - `triggered` - Will show `True` when the zone is triggered during armed state. 
+        - `triggered` - Will show `True` when the zone is triggered during armed state i.e. which zone triggered the alarm.
             - The `triggered` attribute normally `False`.
             - If the alarm triggers, this attribute will turn `True` on the zone that has triggered the alarm.  
-            - The sensor will remain `True` for 1 to 2 update cycles (depending on poll timing) and then go back to `False`  
-
-            This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor (Note that `binary_sensor.[zone_name]_trigger` will be removed in a future release, please update your code if you are using this sensor)
+            - The sensor will remain `True` for 1 to 2 update cycles (depending on poll timing) and then go back to `False`
+            
+            *You should handle any home assistant triggers with automations*
+            
+            *Note multiple sensors can trigger the alarm at the same time if it's armed*
+            
+            *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. This sensor may therefore be up to 30 seconds "late"*
 
 
 
@@ -59,26 +63,6 @@ IDS Hyyp integration for Home Assistant
     - Creates a `button.[site_name]_[automation_name]` button entity. This entity pushes the "automation" button similar to pushing the button in the IDS app.
 
     <br><br>
-- Shows which zone triggered an alarm **THIS FEATURE IS DEPRECATED. IT IS REPLACED BY THE SWITCH ATTRIBUTES EXPLAINED ABOVE**
-    - Creates a `binary_sensor.[zone_name]_trigger` binary sensor entity. If the alarm is triggered, this entity changes to TRUE on the zone that triggered the alarm.
-        - The sensor binary_sensor.[zone name]_trigger is normally FALSE.
-        - If the alarm triggers this binary sensor will turn to TRUE on the zone that has triggered the alarm.  
-        *Note multiple sensors can trigger the alarm at the same time if it's armed*
-        - The sensor will  remain TRUE for 1 update cycles and then go back to FALSE  
-        *You should handle any home assistant triggers with automations*
-            - The sensor may remain TRUE for 2 update cycles depending on how the alarm is synchronized with the update poll.
-        - *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. This sensor may therefore be up to 30 seconds "late"*
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Examples
@@ -150,6 +134,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 ---
 # Changelog:
+
+**Version 1.6.0**
+- Removed `binary_sensor.[zone_name]_trigger` entity per deprecation notice. This information remains available within the `triggered` attribute in `switch.[zone_name]`
 
 **Version 1.5.4**
 - Internal function rename for clarity
