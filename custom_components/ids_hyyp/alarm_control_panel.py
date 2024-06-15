@@ -65,7 +65,7 @@ class HyypAlarm(HyypPartitionEntity, AlarmControlPanelEntity):
         self._attr_name = self.partition_data["name"]
         self._arm_code = arm_code
         self._attr_unique_id = f"{self._site_id}_{partition_id}"
-        self._attr_code_arm_required = bool(arm_code)
+        self._attr_code_arm_required = not bool(arm_code)
         self._arm_home_profile_id = (
             (list(self.partition_data["stayProfiles"])[0])
             if self.partition_data["stayProfiles"]
