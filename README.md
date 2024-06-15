@@ -136,7 +136,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 # Changelog:
 
 **Version 1.6.1**
-- Fixed an issue where alarm panels required entry of code or saving in the partition entity. (Home Assistant 2024.6.0 introduced a new change requiring alarm panels to enter a code when arming.
+- Fixed an issue where alarm panels required entry of code even when configured. (Home Assistant 2024.6.0 introduced a new change requiring alarm panels to enter a code when arming or to save it in the partition entity).
 
 **Version 1.6.0**
 - Removed `binary_sensor.[zone_name]_trigger` entity per deprecation notice. This information remains available within the `triggered` attribute in `switch.[zone_name]`
