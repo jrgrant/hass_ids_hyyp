@@ -26,6 +26,7 @@ from .const import (
     PKG_ADT_ALIAS,
     PGK_IDS_HYYP_ALIAS,
     FCM_CREDENTIALS,
+    GSM_MODE,
     IMEI
 )
 
@@ -117,24 +118,24 @@ class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
                             "label" : PKG_ADT_ALIAS,
                             "value" : PKG_ADT_SECURE_HOME
                             
-                        },       
-                        
+                        },          
                         {
                             "label" : PGK_IDS_HYYP_ALIAS,
-                            "value" : PKG_IDS_HYYP
-                            
-                        },          
-                        
+                            "value" : PKG_IDS_HYYP      
+                        },              
                         ],
                 }
-            })         
+            }),
+         
         }
                 
         data_schema=vol.Schema(data_schema)
         
         EventCategory = {"1": "Emergency", "2": "User", "3": "Trouble", "4": "Information"}
         return self.async_show_form(
-            step_id="user", data_schema=data_schema, errors=errors
+            step_id="user", 
+            data_schema=data_schema, 
+            errors=errors
         )
 
 
@@ -144,6 +145,7 @@ class HyypOptionsFlowHandler(OptionsFlow):
     def __init__(self, config_entry: ConfigEntry) -> None:
         """Initialize options flow."""
         self.config_entry = config_entry
+        self.options = dict(config_entry.options)
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
@@ -152,17 +154,16 @@ class HyypOptionsFlowHandler(OptionsFlow):
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)
 
+        
         options = vol.Schema(
             {
-                vol.Optional(
-                    CONF_TIMEOUT,
-                    default=self.config_entry.options.get(
-                        CONF_TIMEOUT, DEFAULT_TIMEOUT
-                    ),
-                ): int,
                 vol.Optional(ATTR_ARM_CODE): str,
                 vol.Optional(ATTR_BYPASS_CODE): str,
+                vol.Optional(
+                    GSM_MODE, 
+                    default=self.options.get(GSM_MODE, False)): bool,                
             }
         )
+        
 
         return self.async_show_form(step_id="init", data_schema=options)

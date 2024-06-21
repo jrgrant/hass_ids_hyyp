@@ -14,6 +14,9 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 from .const import DOMAIN
 
+
+#arm_code = entry.options.get(ATTR_ARM_CODE)
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -21,12 +24,12 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching IDSHyyp data."""
 
     def __init__(
-        self, hass: HomeAssistant, *, api: HyypClient, api_timeout: int
+        self, hass: HomeAssistant, *, api: HyypClient, api_timeout: int, update_time: int = 30
     ) -> None:
         """Initialize global IDS Hyyp data updater."""
         self.hyyp_client = api
         self._api_timeout = api_timeout
-        update_interval = timedelta(seconds=30)
+        update_interval = timedelta(seconds=update_time)
         self.push_notification_entity_callback_methods = []
         
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=update_interval)

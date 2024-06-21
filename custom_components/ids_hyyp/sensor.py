@@ -28,7 +28,7 @@ async def async_setup_entry(
     coordinator: HyypDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id][
         DATA_COORDINATOR
     ]
-
+    
     async_add_entities(
         [
             HyypSensor(coordinator, site_id, sensor)
@@ -53,8 +53,6 @@ async def async_setup_entry(
             for site_id in coordinator.data
         ]
     )
-
-
 
 class HyypPushNotificationSensor(HyypSiteEntity, SensorEntity):
     """Representation of a IDS Hyyp sensor."""
@@ -89,13 +87,6 @@ class HyypPushNotificationSensor(HyypSiteEntity, SensorEntity):
         return False
 
 
-
-
-
-
-
-
-
 class HyypSensor(HyypSiteEntity, SensorEntity):
     """Representation of a IDS Hyyp sensor."""
 
@@ -118,7 +109,6 @@ class HyypSensor(HyypSiteEntity, SensorEntity):
     def native_value(self) -> Any:
         """Return the state of the sensor."""
         return self.data[self._sensor_name]
-
 
 
 class HyypArmedStateSensor(HyypPartitionEntity, SensorEntity):
@@ -154,4 +144,3 @@ class HyypArmedStateSensor(HyypPartitionEntity, SensorEntity):
             return "Away Armed"
 
         return "Disarmed"
-

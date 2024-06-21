@@ -7,6 +7,7 @@ MODEL = "Hyyp"
 # Configuration
 CONF_PKG = "pkg"
 USER_ID = "userId"
+GSM_MODE = "gsm"
 FCM_CREDENTIALS = "fcm_credentials"
 IMEI = "imei"
 
@@ -21,6 +22,8 @@ PKG_ADT_ALIAS = "ADT Securehome"
 
 # Defaults
 DEFAULT_TIMEOUT = 25
+GSM_MODE_POLL_TIME = 30*60 #30 Minutes
+DEFAULT_POLL_TIME = 30
 
 # Data
 DATA_COORDINATOR = "coordinator"

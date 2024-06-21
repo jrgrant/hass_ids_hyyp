@@ -42,6 +42,14 @@ async def async_setup_entry(
             for stay_profile_id in coordinator.data[site_id]["partitions"][partition_id]["stayProfileIds"]
         ]
     )
+    
+    async_add_entities(
+        [
+            HyypRefreshButton(coordinator, site_id)
+            for site_id in coordinator.data
+
+        ]
+    )
 
     platform = entity_platform.async_get_current_platform()
 
@@ -56,7 +64,24 @@ async def async_setup_entry(
         {vol.Required(ATTR_ARM_CODE): str},
         "perform_stay_profile_arm",
     )
-      
+
+class HyypRefreshButton(HyypSiteEntity, ButtonEntity):
+    """Representation of a IDS Hyyp entity button."""
+
+    def __init__(
+        self,
+        coordinator: HyypDataUpdateCoordinator,
+        site_id: int,) -> None:
+        """Initialize the button."""
+        super().__init__(coordinator, site_id)
+        self._attr_name = f"{self.data['name']} Refresh button"
+        self._attr_unique_id = f"{self._site_id}_Refresh_button"
+
+   
+    async def async_press(self) -> None:
+        """Press the button."""
+        await self.coordinator.async_request_refresh()
+    
     
 class HyypStayArmButton(HyypPartitionEntity, ButtonEntity):
     """Representation of a IDS Hyyp stay arm entity button. This is to allow for multiple stay arm profiles"""

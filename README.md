@@ -14,27 +14,36 @@ IDS Hyyp integration for Home Assistant
 - [Installation](#installation)
 - [About](#about)
     - [Requirements](#requirements)
+    - [Help](#help)
 - [Changelog](#changelog)
 
 # Features
 
 
-- Supports "Cell phone" type push notifications from IDS. These are the same as the notifications that you'd normally receive on your cellphone
-    - Notification summary is shown in `sensor.[site]_ids_push_notifications`
+- Supports "Cell phone" type push notifications from IDS. These are the same as the notifications that you'd normally receive on your cellphone with the HYYP App.
+    - Push notification summary is shown in `sensor.[site]_ids_push_notifications`.
     - You can for example add a push notification automation to get "instant" notifications similar to the IDS app.
 
-
-
+- "Low Data Mode"
+    - For use with "GSM Modules", polling is done once every 30 minutes.
+        - The IDS GSM Modules have a monthly limit of 50MB.
+        - Enabled by checking the relevant box at "Configure" option of integration.
+        - Immediate updates are still done when any action (Arm, disarm, bypass, etc.) is performed
+            - Refresh button can also be used for immediate update.
+- Refresh button which forces an update from IDS.
 
 - Supports multiple sites and multiple partitions which are linked to your IDS Hyyp account.
 - Supports the "Alarm Control Panel" entity which is part of home assistant
 - Bypass of individual zones via switch entities
     - Creates a `switch.[zone_name]` switch entity which can be used to toggle zone on/off (bypass).
         - `TRUE` / `ON` : Zone is ON i.e. not bypassed
-        - `FALSE` / `OFF` : Zone is OFF i.e. bypassed (This will also show off if the zone is bypassed as part of a stay profile)
+        - `FALSE` / `OFF` : Zone is OFF i.e. bypassed (This will also show off when armed if the zone is bypassed as part of a stay profile)
     - `switch.[zone_name]` has several attributes which gives further information regarding the zone
     
-        *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. These sensor attributes may therefore be up to 30 seconds "late" or "missed"*
+        *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since the IDS servers don't have any push implementation. These sensor attributes may therefore be up to 30 seconds "late" or "missed".*
+
+
+        *For "Low Data mode" updates are once every 15 minutes*
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
             
             *The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared or polled by the IDS server.*
@@ -49,9 +58,7 @@ IDS Hyyp integration for Home Assistant
             
             *Note multiple sensors can trigger the alarm at the same time if it's armed*
             
-            *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented. This sensor may therefore be up to 30 seconds "late"*
-
-
+  
 
 - Multiple stay profiles.  
     *Note that the Home Assistant built in "Alarm Control Panel" entity does not support this natively so you will have to create buttons / entity cards etc. to use this feature*
@@ -61,6 +68,7 @@ IDS Hyyp integration for Home Assistant
 - IDS "Automations" / "Triggers".  
     *"Automations" is the term used in the IDS app to activate programmable outputs e.g. to open your gate or garage door. The IDS app also calls it "Triggers"*
     - Creates a `button.[site_name]_[automation_name]` button entity. This entity pushes the "automation" button similar to pushing the button in the IDS app.
+
 
     <br><br>
 
@@ -124,16 +132,36 @@ HACS Method is recommended. If you know how to use SSH or another uploading meth
     - Version 2023.7.3 and newer is recommended.
 - Due to the integration connecting to IDS servers, the Home Assistant server requires an internet connection.
 
+
+## Help
+- If you need help or found bugs, please make use of the github discussions or bug report features. I may assist if time permits.
+(https://github.com/hawky358/hass_ids_hyyp)
+
 ## Disclaimer
 Disclaimer: I am not a programmer/developer/coder/etc. I created this fork since I want to continue using this integration. It was broken for me (2023.4), so I fixed it and thought I'd share it so other people can also continue using it.
 Support, updates, bugfixes, features, etc. will be limited, but I will help where possible and will share anything I develop
 
+##
 
 <br>
 <br>
 
 ---
 # Changelog:
+
+**Version 1.7.0 beta 1**
+- Implemented "GSM Module low data mode" which only polls the IDS servers every 15 minutes.
+    - The GSM Module low data mode can be selected at "Configure" of the intergration.
+
+    ![Alt text](images/gsmmode.png)
+
+    - The IDS GSM Module is provided with only 50MB of data a month thus polling too frequently uses the data in 2 or 3 days.
+
+- Added a "Refresh" button `button.[site_name]_refresh_button` which queues an immediate refresh from the IDS servers.
+
+    *(Creating an automation which pushes the refresh button when a push notification is received can be combined with GSM Module low data mode for up to date info.)*
+
+- Removed timeout configuration option
 
 **Version 1.6.1**
 - Fixed an issue where alarm panels required entry of code even when configured. (Home Assistant 2024.6.0 introduced a new change requiring alarm panels to enter a code when arming or to save it in the partition entity).  You may need to restart home assistant after configuring your Arm and bypass codes.
@@ -190,6 +218,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 **Version 1.3.3**
 - Renamed the options in the config flow during initial setup to be less "obscure"
+
 ![Alt text](images/configflowchange.png)
 
 **Version 1.3.2**
@@ -202,11 +231,11 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 **Version 1.3.0**
 - Added Binary sensor which shows which zone triggered the alarm.
 
-    The sensor binary_sensor.[zone_name]_trigger is normally FALSE.
-    If the alarm triggers this binary sensor will turn to TRUE on the zone that has triggered the alarm. 
+    The sensor binary_sensor.[zone_name]_trigger is normally `False`.
+    If the alarm triggers this binary sensor will turn to `True` on the zone that has triggered the alarm. 
         (Note multiple sensors can trigger the alarm at the same time if it's armed) 
-    The sensor will  remain TRUE for 1 update cycles and then go back to FALSE (You should handle any home assistant triggers with automations)
-    The sensor may remain TRUE for 2 update cycles depending on how the alarm is synchronized with the update poll.
+    The sensor will remain `True` for 1 update cycles and then go back to `False` (You should handle any home assistant triggers with automations)
+    The sensor may remain `True` for 2 update cycles depending on how the alarm is synchronized with the update poll.
     Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since there is no push from IDS implemented
 - Bumped API dependency
 
@@ -216,7 +245,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 **Version 1.2.1**
 - Fixed a bug where the "Panel" showed disarmed even though the state attribute for the panel showed a "Stay Armed" name. This is a limitation of the home assistant alarm control panel entity. The control panel state attribute has been reverted and no longer has detailed names in the .status attribute.
-- The status and name of the armed mode is now contained within a new sensor "sensor.[site]_[partition]_armed_status" and will display the various states e.g.  "Stay Arm 1" or "Stay Arm 2", disarmed etc.
+- The status and name of the armed mode is now contained within a new sensor `sensor.[site]_[partition]_armed_status` and will display the various states e.g.  "Stay Arm 1" or "Stay Arm 2", disarmed etc.
 
 
 **Version 1.2.0**

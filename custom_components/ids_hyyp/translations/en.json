@@ -14,7 +14,7 @@
       "user": {
         "data": {
           "password": "Password",
-          "pkg": "Package variant",
+          "pkg": "Package Variant",
           "email": "Email"
         },
         "title": "Connect to IDS Hyyp"
@@ -25,9 +25,9 @@
     "step": {
       "init": {
         "data": {
-          "timeout": "Request Timeout (seconds)",
           "bypass_code": "Bypass code",
-          "arm_code": "Arm code"
+          "arm_code": "Arm code",
+          "gsm": "GSM Module low data mode"
         }
       }
     }

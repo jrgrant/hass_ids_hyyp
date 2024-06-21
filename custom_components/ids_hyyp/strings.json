@@ -3,11 +3,11 @@
     "flow_title": "{name}",
     "step": {
       "user": {
-        "title": "Connect to IDS Hyyp",
+        "title": "Connect to IDS Hyypz",
         "data": {
           "email": "[%key:common::config_flow::data::email%]",
           "password": "[%key:common::config_flow::data::password%]",
-          "pkg": "Package variant"
+          "pkg": "Package Variant"
         }
       }
     },
@@ -25,9 +25,9 @@
     "step": {
       "init": {
         "data": {
-          "timeout": "Request Timeout (seconds)",
           "bypass_code": "Bypass code",
-          "arm_code": "Arm code"
+          "arm_code": "Arm code",
+          "gsm": "GSM Module low data mode"
         }
       }
     }
