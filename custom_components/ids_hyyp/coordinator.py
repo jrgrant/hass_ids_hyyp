@@ -1,4 +1,4 @@
-"""Provides the ezviz DataUpdateCoordinator."""
+"""Provides the DataUpdateCoordinator."""
 from datetime import timedelta
 import logging
 from typing import Any
@@ -14,11 +14,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 from .const import DOMAIN
 
-
-#arm_code = entry.options.get(ATTR_ARM_CODE)
-
 _LOGGER = logging.getLogger(__name__)
-
 
 class HyypDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching IDSHyyp data."""
@@ -29,6 +25,8 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize global IDS Hyyp data updater."""
         self.hyyp_client = api
         self._api_timeout = api_timeout
+        _LOGGER.warning("^^^^^^ GSM Mode Test Update Time")
+        _LOGGER.warning(update_time)
         update_interval = timedelta(seconds=update_time)
         self.push_notification_entity_callback_methods = []
         
@@ -39,7 +37,6 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self) -> dict[Any, Any]:
         """Fetch data from IDS Hyyp."""
  
-
         try:
             async with timeout(self._api_timeout):
                 return await self.hass.async_add_executor_job(

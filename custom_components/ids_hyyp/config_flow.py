@@ -1,4 +1,4 @@
-"""Config flow for ezviz."""
+"""Config flow."""
 from __future__ import annotations
 
 import logging
@@ -26,7 +26,9 @@ from .const import (
     PKG_ADT_ALIAS,
     PGK_IDS_HYYP_ALIAS,
     FCM_CREDENTIALS,
-    GSM_MODE,
+    POLLING_TIME,
+    DEFAULT_POLL_TIME,
+    POLLING_TIME_NEVER_POLL,
     IMEI
 )
 
@@ -124,8 +126,8 @@ class HyypConfigFlow(ConfigFlow, domain=DOMAIN):
                             "value" : PKG_IDS_HYYP      
                         },              
                         ],
-                }
-            }),
+                        }
+                }),
          
         }
                 
@@ -158,10 +160,33 @@ class HyypOptionsFlowHandler(OptionsFlow):
         options = vol.Schema(
             {
                 vol.Optional(ATTR_ARM_CODE): str,
-                vol.Optional(ATTR_BYPASS_CODE): str,
+                vol.Optional(ATTR_BYPASS_CODE): str,                   
                 vol.Optional(
-                    GSM_MODE, 
-                    default=self.options.get(GSM_MODE, False)): bool,                
+                    POLLING_TIME, 
+                    default=self.options.get(POLLING_TIME, DEFAULT_POLL_TIME)
+                    ): 
+                        selector({
+                            "select": {
+                                "options": [
+                                    {
+                                        "label" : "30 Secs (Default)",
+                                        "value" : DEFAULT_POLL_TIME
+                                        
+                                    },       
+                                    {
+                                        "label" : "120 Mins",
+                                        "value" : "7200"    
+                                    },   
+                                    {
+                                        "label" : "Never*",
+                                        "value" : POLLING_TIME_NEVER_POLL
+                                        
+                                    },               
+                                    ],
+                                "mode": "dropdown",
+                                    }
+                        }),
+        
             }
         )
         

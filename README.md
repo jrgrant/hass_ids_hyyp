@@ -23,14 +23,14 @@ IDS Hyyp integration for Home Assistant
 - Supports "Cell phone" type push notifications from IDS. These are the same as the notifications that you'd normally receive on your cellphone with the HYYP App.
     - Push notification summary is shown in `sensor.[site]_ids_push_notifications`.
     - You can for example add a push notification automation to get "instant" notifications similar to the IDS app.
-
 - "Low Data Mode"
-    - For use with "GSM Modules", polling is done once every 30 minutes.
-        - The IDS GSM Modules have a monthly limit of 50MB.
-        - Enabled by checking the relevant box at "Configure" option of integration.
+    - For use with "GSM Modules"
+        *The IDS GSM Modules seem to have a monthly limit of 50MB and a daily limit.*
+        - Polling interval can be adjusted to once every 120 minutes or "Never" - User selects at "Configure"
         - Immediate updates are still done when any action (Arm, disarm, bypass, etc.) is performed
             - Refresh button can also be used for immediate update.
 - Refresh button which forces an update from IDS.
+    - `button.[site_name]_refresh_button` queues an immediate update from the IDS servers.
 
 - Supports multiple sites and multiple partitions which are linked to your IDS Hyyp account.
 - Supports the "Alarm Control Panel" entity which is part of home assistant
@@ -38,28 +38,25 @@ IDS Hyyp integration for Home Assistant
     - Creates a `switch.[zone_name]` switch entity which can be used to toggle zone on/off (bypass).
         - `TRUE` / `ON` : Zone is ON i.e. not bypassed
         - `FALSE` / `OFF` : Zone is OFF i.e. bypassed (This will also show off when armed if the zone is bypassed as part of a stay profile)
-    - `switch.[zone_name]` has several attributes which gives further information regarding the zone
-    
-        *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since the IDS servers don't have any push implementation. These sensor attributes may therefore be up to 30 seconds "late" or "missed".*
 
-
-        *For "Low Data mode" updates are once every 15 minutes*
-        - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
-            
-            *The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared or polled by the IDS server.*
+    - `switch.[zone_name]` has several attributes which gives further information regarding the zone.<br>
+    *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since the IDS servers don't have any push implementation. These sensor attributes may therefore be up to 30 seconds "late" or "missed".* *For "GSM Module Low Data mode" updates are once every 30 minutes*
+        - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)     
+            - *The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared or polled by the IDS server.*
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, implemented directly from IDS server feedback)
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active.
         - `triggered` - Will show `True` when the zone is triggered during armed state i.e. which zone triggered the alarm.
             - The `triggered` attribute normally `False`.
             - If the alarm triggers, this attribute will turn `True` on the zone that has triggered the alarm.  
-            - The sensor will remain `True` for 1 to 2 update cycles (depending on poll timing) and then go back to `False`
-            
-            *You should handle any home assistant triggers with automations*
-            
-            *Note multiple sensors can trigger the alarm at the same time if it's armed*
+            - The sensor will remain `True` for 1 to 2 update cycles (depending on poll timing) and then go back to `False`    
+            - *You should handle any home assistant triggers with automations* 
+            - *Note multiple sensors can trigger the alarm at the same time if it's armed*
+
+    
+
+
             
   
-
 - Multiple stay profiles.  
     *Note that the Home Assistant built in "Alarm Control Panel" entity does not support this natively so you will have to create buttons / entity cards etc. to use this feature*
     - Creates a `button.[site_name]_[partition_name]_[stay_profile_name]` button entity which can be used to arm a specific stay profile. You can also switch between stay profiles while armed in a stay profile.
@@ -138,8 +135,10 @@ HACS Method is recommended. If you know how to use SSH or another uploading meth
 (https://github.com/hawky358/hass_ids_hyyp)
 
 ## Disclaimer
-Disclaimer: I am not a programmer/developer/coder/etc. I created this fork since I want to continue using this integration. It was broken for me (2023.4), so I fixed it and thought I'd share it so other people can also continue using it.
+- I am not a programmer/developer/coder/etc. I created this fork since I want to continue using this integration. It was broken for me (2023.4), so I fixed it and thought I'd share it so other people can also continue using it.
 Support, updates, bugfixes, features, etc. will be limited, but I will help where possible and will share anything I develop
+- This integration is in no way affiliated with IDS. 
+    - IDS will not be able to assist with any troubleshooting.
 
 ##
 
@@ -149,9 +148,20 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.7.0 beta 2**
+- Changed the GSM mode from a tickbox to a selectable poll time.
+- Added a "Never" option to the "GSM Module low data mode" which doesn't poll the IDS servers based on time. (Currently ~once a day)
+    - Only the refresh button, and actions such as arm, disarm, bypass will poll the IDS server.
+- Based on feedback added an automatic polling time of 120mins.
+- These options can be selected in the "Configure" section of the integration.
+
+    ![alt text](images/gsmmode_poll.png)
+
+- Cleanup of readme and HACS configuration files.
+
 **Version 1.7.0 beta 1**
-- Implemented "GSM Module low data mode" which only polls the IDS servers every 15 minutes.
-    - The GSM Module low data mode can be selected at "Configure" of the intergration.
+- Implemented "GSM Module low data mode" which only polls the IDS servers every 30 minutes.
+    - The GSM Module low data mode can be selected at "Configure" of the integration.
 
     ![Alt text](images/gsmmode.png)
 
@@ -164,7 +174,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 - Removed timeout configuration option
 
 **Version 1.6.1**
-- Fixed an issue where alarm panels required entry of code even when configured. (Home Assistant 2024.6.0 introduced a new change requiring alarm panels to enter a code when arming or to save it in the partition entity).  You may need to restart home assistant after configuring your Arm and bypass codes.
+- Fixed an issue where alarm panels required entry of code even when configured. (Home Assistant 2024.6.1 introduced a new change requiring alarm panels to enter a code when arming, or to save it in the partition entity).  You may need to restart home assistant after configuring your Arm and bypass codes.
 
 **Version 1.6.0**
 - Removed `binary_sensor.[zone_name]_trigger` entity per deprecation notice. This information remains available within the `triggered` attribute in `switch.[zone_name]`
@@ -202,7 +212,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 - If you are upgrading from  1.3.x or earlier then you **MUST** re-add the integration to load the new configuration settings.
 - **`binary_sensor.[zone_name]_trigger` will be removed soon, please update necessary code per below.**
-- IDS servers now provide additional zone information which have been added to the integration. This information is shown as an attributed within the zone switch.
+- IDS servers now provide additional zone information which have been added to the integration. This information is shown as an attribute within the zone switch.
     - The `switch.[zone_name]` will now have the following attributes 
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, by implemented directly from IDS feedback)

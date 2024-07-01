@@ -27,7 +27,7 @@
         "data": {
           "bypass_code": "Bypass code",
           "arm_code": "Arm code",
-          "gsm": "GSM Module low data mode"
+          "polling_time": "IDS Poll interval"
         }
       }
     }

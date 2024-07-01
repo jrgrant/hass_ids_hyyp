@@ -18,8 +18,7 @@ from .const import (
     DEFAULT_TIMEOUT,
     DOMAIN,
     FCM_CREDENTIALS,
-    GSM_MODE,
-    GSM_MODE_POLL_TIME,
+    POLLING_TIME,
     DEFAULT_POLL_TIME,   
     IMEI,
 )
@@ -55,10 +54,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                              imei=entry.data[IMEI],
                              )
     
-    if entry.options.get(GSM_MODE):
-        update_time = GSM_MODE_POLL_TIME
-    else:
-        update_time = DEFAULT_POLL_TIME
+
+    if entry.options.get(POLLING_TIME) is None:
+        update_time = int(DEFAULT_POLL_TIME)
+    else: 
+        update_time = int(entry.options.get(POLLING_TIME))
+
         
     
     coordinator = HyypDataUpdateCoordinator(
