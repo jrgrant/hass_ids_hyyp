@@ -25,8 +25,6 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize global IDS Hyyp data updater."""
         self.hyyp_client = api
         self._api_timeout = api_timeout
-        _LOGGER.warning("^^^^^^ GSM Mode Test Update Time")
-        _LOGGER.warning(update_time)
         update_interval = timedelta(seconds=update_time)
         self.push_notification_entity_callback_methods = []
         
