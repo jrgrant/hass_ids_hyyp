@@ -23,12 +23,13 @@ IDS Hyyp integration for Home Assistant
 - Supports "Cell phone" type push notifications from IDS. These are the same as the notifications that you'd normally receive on your cellphone with the HYYP App.
     - Push notification summary is shown in `sensor.[site]_ids_push_notifications`.
     - You can for example add a push notification automation to get "instant" notifications similar to the IDS app.
-- "Low Data Mode"
+- Adjustable polling time
     - For use with "GSM Modules"
-        *The IDS GSM Modules seem to have a monthly limit of 50MB and a daily limit.*
-        - Polling interval can be adjusted to once every 120 minutes or "Never" - User selects at "Configure"
+        *The IDS GSM Modules seem to have a monthly limit of 50MB and a certain daily limit.*
+        - Polling interval can be adjusted to once every 120 minutes or "Never*" - User can select the value at integration's "Configure"
         - Immediate updates are still done when any action (Arm, disarm, bypass, etc.) is performed
             - Refresh button can also be used for immediate update.
+        - *Never is approximately 1 week between polls.
 - Refresh button which forces an update from IDS.
     - `button.[site_name]_refresh_button` queues an immediate update from the IDS servers.
 
@@ -147,6 +148,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 ---
 # Changelog:
+
+**Version 1.7.0 beta 3**
+- Changed "Never" polling time to be approximately 1 week.
 
 **Version 1.7.0 beta 2**
 - Changed the GSM mode from a tickbox to a selectable poll time.

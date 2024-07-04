@@ -22,11 +22,11 @@ PKG_ADT_ALIAS = "ADT Securehome"
 
 # Defaults
 DEFAULT_TIMEOUT = 25
-DEFAULT_POLL_TIME = "30"
+DEFAULT_POLL_TIME = 30
 
 
 #GSM Mode
-POLLING_TIME_NEVER_POLL = str(86400) #1 day in seconds
+POLLING_TIME_NEVER_POLL = 24*7*3600 #1 week in seconds
 
 
 # Data

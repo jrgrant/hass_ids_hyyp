@@ -163,14 +163,14 @@ class HyypOptionsFlowHandler(OptionsFlow):
                 vol.Optional(ATTR_BYPASS_CODE): str,                   
                 vol.Optional(
                     POLLING_TIME, 
-                    default=self.options.get(POLLING_TIME, DEFAULT_POLL_TIME)
+                    default=self.options.get(POLLING_TIME, str(DEFAULT_POLL_TIME))
                     ): 
                         selector({
                             "select": {
                                 "options": [
                                     {
                                         "label" : "30 Secs (Default)",
-                                        "value" : DEFAULT_POLL_TIME
+                                        "value" : str(DEFAULT_POLL_TIME)
                                         
                                     },       
                                     {
@@ -178,8 +178,8 @@ class HyypOptionsFlowHandler(OptionsFlow):
                                         "value" : "7200"    
                                     },   
                                     {
-                                        "label" : "Never*",
-                                        "value" : POLLING_TIME_NEVER_POLL
+                                        "label" : "Never* (For use with GSM Modules)",
+                                        "value" : str(POLLING_TIME_NEVER_POLL)
                                         
                                     },               
                                     ],
