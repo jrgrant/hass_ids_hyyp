@@ -26,6 +26,7 @@ DEFAULT_POLL_TIME = 30
 
 
 #GSM Mode
+POLLING_TIME_24_HOURS = 24*3600 #1 day in seconds
 POLLING_TIME_NEVER_POLL = 24*7*3600 #1 week in seconds
 
 

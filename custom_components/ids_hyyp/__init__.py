@@ -61,7 +61,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         update_time = int(entry.options.get(POLLING_TIME))
 
         
-    
     coordinator = HyypDataUpdateCoordinator(
         hass, api=hyyp_client, api_timeout=DEFAULT_TIMEOUT, update_time=update_time
     )

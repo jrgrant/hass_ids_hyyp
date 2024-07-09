@@ -149,6 +149,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.7.0 beta 4**
+- Added 24 Hour polling time.
+
 **Version 1.7.0 beta 3**
 - Changed "Never" polling time to be approximately 1 week.
 

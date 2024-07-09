@@ -29,6 +29,7 @@ from .const import (
     POLLING_TIME,
     DEFAULT_POLL_TIME,
     POLLING_TIME_NEVER_POLL,
+    POLLING_TIME_24_HOURS,
     IMEI
 )
 
@@ -176,7 +177,12 @@ class HyypOptionsFlowHandler(OptionsFlow):
                                     {
                                         "label" : "120 Mins",
                                         "value" : "7200"    
-                                    },   
+                                    },
+                                                                        {
+                                        "label" : "24 Hours (For use with GSM Modules)",
+                                        "value" : str(POLLING_TIME_24_HOURS)
+                                        
+                                    },      
                                     {
                                         "label" : "Never* (For use with GSM Modules)",
                                         "value" : str(POLLING_TIME_NEVER_POLL)
