@@ -174,11 +174,8 @@ class HyypOptionsFlowHandler(OptionsFlow):
                                         "value" : str(DEFAULT_POLL_TIME)
                                         
                                     },       
-                                    {
-                                        "label" : "120 Mins",
-                                        "value" : "7200"    
-                                    },
-                                                                        {
+
+                                    {   
                                         "label" : "24 Hours (For use with GSM Modules)",
                                         "value" : str(POLLING_TIME_24_HOURS)
                                         

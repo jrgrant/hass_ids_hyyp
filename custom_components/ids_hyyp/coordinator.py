@@ -27,11 +27,12 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         self._api_timeout = api_timeout
         update_interval = timedelta(seconds=update_time)
         self.push_notification_entity_callback_methods = []
+        self.poll_interval_callback_method = None
         
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=update_interval)
 
         self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data)
-
+        
     async def _async_update_data(self) -> dict[Any, Any]:
         """Fetch data from IDS Hyyp."""
  
@@ -67,3 +68,6 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         
     def _regisiter_callback_for_push_notification_entity(self, callback):
         self.push_notification_entity_callback_methods.append(callback)     
+    
+    def _poll_inverval_update_callback(self, callback):
+        self.poll_interval_callback_method = callback

@@ -53,6 +53,13 @@ async def async_setup_entry(
             for site_id in coordinator.data
         ]
     )
+    
+    async_add_entities(
+        [
+            HyypPollIntervalSensor(coordinator, site_id)
+            for site_id in coordinator.data
+        ]
+    )
 
 class HyypPushNotificationSensor(HyypSiteEntity, SensorEntity):
     """Representation of a IDS Hyyp sensor."""
@@ -85,6 +92,40 @@ class HyypPushNotificationSensor(HyypSiteEntity, SensorEntity):
     def should_poll(self):
 
         return False
+
+
+class HyypPollIntervalSensor(HyypSiteEntity, SensorEntity):
+    """Representation of a IDS Hyyp sensor."""
+
+    coordinator: HyypDataUpdateCoordinator
+
+    def __init__(
+        self,
+        coordinator: HyypDataUpdateCoordinator,
+        site_id: int,
+    ) -> None:
+        """Initialize the sensor."""
+        super().__init__(coordinator, site_id)
+        self._attr_name = f"{self.data['name']} IDS Poll Interval"
+        self._attr_unique_id = f"{self.data['name']}_IDS_poll_interval_sensor"
+        self.value = None
+        self.coordinator._poll_inverval_update_callback(callback = self._update_callback)
+
+
+    def _update_callback(self, data):
+        self.value = data
+        self.schedule_update_ha_state()
+
+    @property
+    def native_value(self) -> Any:
+        """Return the state of the sensor."""
+        return self.value
+
+    @property
+    def should_poll(self):
+        return False
+
+
 
 
 class HyypSensor(HyypSiteEntity, SensorEntity):

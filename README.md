@@ -149,6 +149,10 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.7.0 beta 5**
+- Added `sensor.[site_name]_ids_poll_interval` which shows the current poll time to IDS in seconds. (Useful for GSM users to confirm settings)
+- Removed the 120min update interval.
+
 **Version 1.7.0 beta 4**
 - Added 24 Hour polling time.
 
