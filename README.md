@@ -26,12 +26,14 @@ IDS Hyyp integration for Home Assistant
 - Adjustable polling time
     - For use with "GSM Modules"
         *The IDS GSM Modules seem to have a monthly limit of 50MB and a certain daily limit.*
-        - Polling interval can be adjusted to once every 120 minutes or "Never*" - User can select the value at integration's "Configure"
+        - Polling interval can be adjusted to once a day or "Never*" - User can select the value at integration's "Configure"
         - Immediate updates are still done when any action (Arm, disarm, bypass, etc.) is performed
             - Refresh button can also be used for immediate update.
         - *Never is approximately 1 week between polls.
 - Refresh button which forces an update from IDS.
     - `button.[site_name]_refresh_button` queues an immediate update from the IDS servers.
+- `sensor.[site_name]_ids_poll_interval` shows the current poll time to IDS in seconds. (Useful for GSM users to confirm settings)
+
 
 - Supports multiple sites and multiple partitions which are linked to your IDS Hyyp account.
 - Supports the "Alarm Control Panel" entity which is part of home assistant
@@ -149,40 +151,23 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.7.0 beta 5**
-- Added `sensor.[site_name]_ids_poll_interval` which shows the current poll time to IDS in seconds. (Useful for GSM users to confirm settings)
-- Removed the 120min update interval.
 
-**Version 1.7.0 beta 4**
-- Added 24 Hour polling time.
+**Version 1.7.0**
 
-**Version 1.7.0 beta 3**
-- Changed "Never" polling time to be approximately 1 week.
 
-**Version 1.7.0 beta 2**
-- Changed the GSM mode from a tickbox to a selectable poll time.
-- Added a "Never" option to the "GSM Module low data mode" which doesn't poll the IDS servers based on time. (Currently ~once a day)
-    - Only the refresh button, and actions such as arm, disarm, bypass will poll the IDS server.
-- Based on feedback added an automatic polling time of 120mins.
-- These options can be selected in the "Configure" section of the integration.
-
+- Implemented a selectable IDS server polling time (30 secods, Once a day, Never) 
+    - This was added to provide longer polling times for use with GSM Modules which have a daily/monthly poll / data limit
+    - This can be selected at "Configure" of the integration.
+    
     ![alt text](images/gsmmode_poll.png)
+
+- Added `sensor.[site_name]_ids_poll_interval` which shows the current poll time to IDS in seconds. (Useful for GSM users to confirm settings)
+
+- Added a "Refresh" button `button.[site_name]_refresh_button` which queues an immediate refresh from the IDS servers.
+    *(Creating an automation which pushes the refresh button when a push notification is received can be combined with GSM Module low data mode for up to date info.)*
 
 - Cleanup of readme and HACS configuration files.
 
-**Version 1.7.0 beta 1**
-- Implemented "GSM Module low data mode" which only polls the IDS servers every 30 minutes.
-    - The GSM Module low data mode can be selected at "Configure" of the integration.
-
-    ![Alt text](images/gsmmode.png)
-
-    - The IDS GSM Module is provided with only 50MB of data a month thus polling too frequently uses the data in 2 or 3 days.
-
-- Added a "Refresh" button `button.[site_name]_refresh_button` which queues an immediate refresh from the IDS servers.
-
-    *(Creating an automation which pushes the refresh button when a push notification is received can be combined with GSM Module low data mode for up to date info.)*
-
-- Removed timeout configuration option
 
 **Version 1.6.1**
 - Fixed an issue where alarm panels required entry of code even when configured. (Home Assistant 2024.6.1 introduced a new change requiring alarm panels to enter a code when arming, or to save it in the partition entity).  You may need to restart home assistant after configuring your Arm and bypass codes.
