@@ -22,10 +22,10 @@ IDS Hyyp integration for Home Assistant
 
 - Supports "Cell phone" type push notifications from IDS. These are the same as the notifications that you'd normally receive on your cellphone with the HYYP App.
     - Push notification summary is shown in `sensor.[site]_ids_push_notifications`.
-    - You can for example add a push notification automation to get "instant" notifications similar to the IDS app.
+    - You can for example add a HASS push notification to your phone automation to get "instant" notifications similar to the IDS app.
 - Adjustable polling time
     - For use with "GSM Modules"
-        *The IDS GSM Modules seem to have a monthly limit of 50MB and a certain daily limit.*
+        *The IDS GSM Modules seem to have a monthly limit of 50MB, and a certain daily limit.*
         - Polling interval can be adjusted to once a day or "Never*" - User can select the value at integration's "Configure"
         - Immediate updates are still done when any action (Arm, disarm, bypass, etc.) is performed
             - Refresh button can also be used for immediate update.
@@ -39,19 +39,21 @@ IDS Hyyp integration for Home Assistant
 - Supports the "Alarm Control Panel" entity which is part of home assistant
 - Bypass of individual zones via switch entities
     - Creates a `switch.[zone_name]` switch entity which can be used to toggle zone on/off (bypass).
-        - `TRUE` / `ON` : Zone is ON i.e. not bypassed
-        - `FALSE` / `OFF` : Zone is OFF i.e. bypassed (This will also show off when armed if the zone is bypassed as part of a stay profile)
+        - `True` / `ON` : Zone is ON i.e. not bypassed
+        - `False` / `OFF` : Zone is OFF i.e. bypassed 
+            - This will also show `OFF` if the zone is bypassed when armed as part of a stay profile
 
     - `switch.[zone_name]` has several attributes which gives further information regarding the zone.<br>
-    *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds since the IDS servers don't have any push implementation. These sensor attributes may therefore be up to 30 seconds "late" or "missed".* *For "GSM Module Low Data mode" updates are once every 30 minutes*
+    *Note that due to the polling time to the IDS server this currently only updates once every 30 seconds as a default. Polling is done since the IDS servers don't have any push implementation for alarm info. These sensor attributes may therefore be up to 30 seconds "late" or "missed".* *For GSM users the updates are per the configurations settings and shouldn't be relied on*
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)     
-            - *The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared or polled by the IDS server.*
-        - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, implemented directly from IDS server feedback)
+            - *The `violated` attribute may be "missed" if for example an unarmed violation occurs on a PIR in-between polls. The "violation" is never shared to or polled by the IDS server. This is IDS's implementation on their panels*
+        - `tampered` - Will show `True` when a zone is in tampered state
         - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active.
         - `triggered` - Will show `True` when the zone is triggered during armed state i.e. which zone triggered the alarm.
-            - The `triggered` attribute normally `False`.
+            - The `triggered` attribute is normally `False`.
             - If the alarm triggers, this attribute will turn `True` on the zone that has triggered the alarm.  
-            - The sensor will remain `True` for 1 to 2 update cycles (depending on poll timing) and then go back to `False`    
+            - The sensor will remain `True` for 1 to 2 update cycles (depending on poll timing) and then go back to `False` 
+            - *It's recommended you use the `sensor.[site]_ids_push_notifications` if you need "live" data*   
             - *You should handle any home assistant triggers with automations* 
             - *Note multiple sensors can trigger the alarm at the same time if it's armed*
 
@@ -61,12 +63,12 @@ IDS Hyyp integration for Home Assistant
             
   
 - Multiple stay profiles.  
-    *Note that the Home Assistant built in "Alarm Control Panel" entity does not support this natively so you will have to create buttons / entity cards etc. to use this feature*
+    *Note that the Home Assistant built in "Alarm Control Panel" entity does not support this, so you will have to create buttons / entity cards etc. to use this feature.*
     - Creates a `button.[site_name]_[partition_name]_[stay_profile_name]` button entity which can be used to arm a specific stay profile. You can also switch between stay profiles while armed in a stay profile.
-    - Creates a `sensor.[site_name]_[partition_name]_status` sensor. This sensor provides more detailed feedback regarding the state of the panel. This is similar to the `"Alarm Control Panel".status` however it also supports additional stay profile names which the native entity does not.
+    - Creates a `sensor.[site_name]_[partition_name]_status` sensor. This sensor provides more detailed feedback regarding the state of the panel. This is similar to the built in `[Alarm Control Panel].status` however it also supports additional stay profile names which the built-in entity does not.
         - Examples of statuses: `Armed`, `Disarmed`, `Triggered`, `Away Armed`, `Armed Stay`, `Armed [Stay_profile_name]`
 - IDS "Automations" / "Triggers".  
-    *"Automations" is the term used in the IDS app to activate programmable outputs e.g. to open your gate or garage door. The IDS app also calls it "Triggers"*
+    *"Automations" is the term used in the IDS app to activate programmable outputs on the panel e.g. to open your gate or garage door. The IDS app also calls it "Triggers"*
     - Creates a `button.[site_name]_[automation_name]` button entity. This entity pushes the "automation" button similar to pushing the button in the IDS app.
 
 
@@ -76,6 +78,7 @@ IDS Hyyp integration for Home Assistant
 # Examples
 In its most basic form, IDS Hyyp supports the "Alarm Control Panel" entity which is part of Home Assistant.
 This allows arming and disarming of partitions by simulating a control panel.
+It is however recommended that you build your own interface since the built in Alarm Control Panel doesn't support all the features provided by this integration.
 
 ![panel](images/panel.gif)
 
@@ -139,7 +142,7 @@ HACS Method is recommended. If you know how to use SSH or another uploading meth
 
 ## Disclaimer
 - I am not a programmer/developer/coder/etc. I created this fork since I want to continue using this integration. It was broken for me (2023.4), so I fixed it and thought I'd share it so other people can also continue using it.
-Support, updates, bugfixes, features, etc. will be limited, but I will help where possible and will share anything I develop
+Support, updates, bugfixes, features, etc. will be limited, but I will help where possible and will share anything I develop.
 - This integration is in no way affiliated with IDS. 
     - IDS will not be able to assist with any troubleshooting.
 
@@ -151,12 +154,14 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.7.1**
+- Minor clean-up to the readme.
 
 **Version 1.7.0**
 
 
 - Implemented a selectable IDS server polling time (30 secods, Once a day, Never) 
-    - This was added to provide longer polling times for use with GSM Modules which have a daily/monthly poll / data limit
+    - This was added to provide longer polling times for use with GSM Modules which have a daily/monthly poll/data limit
     - This can be selected at "Configure" of the integration.
     
     ![alt text](images/gsmmode_poll.png)
@@ -164,7 +169,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 - Added `sensor.[site_name]_ids_poll_interval` which shows the current poll time to IDS in seconds. (Useful for GSM users to confirm settings)
 
 - Added a "Refresh" button `button.[site_name]_refresh_button` which queues an immediate refresh from the IDS servers.
-    *(Creating an automation which pushes the refresh button when a push notification is received can be combined with GSM Module low data mode for up to date info.)*
+    *(Creating an automation which pushes the refresh button when a push notification is received can be combined with GSM Module low data mode for up to date info while keeping polling to a minimum.)*
 
 - Cleanup of readme and HACS configuration files.
 
@@ -192,7 +197,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 - If you are upgrading from 1.5.0 or earlier then you **MUST** re-add the integration to load the new configuration settings.
 - Implemented several fixes to the push notification system to prevent infinite loop and high CPU usage
-- Implemented better heatbeat and reconnect methods for the push notification system.
+- Implemented better heartbeat and reconnect methods for the push notification system.
 
 
 **Version 1.5.0**
@@ -212,8 +217,8 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
     - The `switch.[zone_name]` will now have the following attributes 
         - `violated` - Will show `True` when a zone is violated for example if a door is open. (Alarm need not be armed)
         - `tampered` - Will show `True` when a zone is in tampered state (Not yet verified, by implemented directly from IDS feedback)
-        - `triggered` - Will show `True` when the zone is triggered during armed state. This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor
-        - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active
+        - `triggered` - Will show `True` when the zone is triggered during armed state. This is identical to `binary_sensor.[zone_name]_trigger`. The intent is to have this attribute replace the sensor.
+        - `stay_bypassed` - Will show `True` if a zone is bypassed due to a stay profile being active.
 - Changed the API refresh requests to series. This makes the replies more reliable when multiple actions are performed.
 
 **Version 1.3.4**
@@ -256,8 +261,8 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 **Version 1.2.0**
 - Added the ability to use more than one stay profile
-    - If you have more than one stay-profile, there will now be a button entity (and a service) in home assistant for each of the stay-profiles which allows you to arm each of the "Stay-Profiles" and swap between them
-    - When armed to a stay profile, the stay profile name will be shown in the "armed" box
+    - If you have more than one stay-profile, there will now be a button entity (and a service) in home assistant for each of the stay-profiles which allows you to arm each of the "Stay-Profiles" and swap between them.
+    - When armed to a stay profile, the stay profile name will be shown in the "armed" box.
 
 **Version 1.1.0**
 - Added the ability to trigger automations
@@ -281,13 +286,14 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 - Updated Readme and allowed for display on HACS
 
 **Version 0.0.1.6** (Main changes from the original [RenierM26](https://github.com/RenierM26/hass_ids_hyyp) version)
-
-- This is a fork of [francoistk's](https://github.com/francoistk/hass_ids_hyyp) version which was a fork from [RenierM26's](https://github.com/RenierM26/hass_ids_hyyp) original version
-    - [francoistk](https://github.com/francoistk/hass_ids_hyyp) fixed the requirement that a stay profile is required for every partition
 - Reverse engineered the pyHyypApi protobuf files and recompiled. (Fixes 2023.4 compatibility) This is not a direct change to ids_hyyp, rather it's a change to the API (https://github.com/hawky358/pyHyypApi)
 - Modified dependencies in IDS_HYYP to point to new modified pyhyypapi api package
 - Changed name to IDS Hyyp (Beta)(hawkMod) to avoid potential conflicts with previous version
 - Works with 2023.4 and higher.
+
+- This is a fork of [francoistk's](https://github.com/francoistk/hass_ids_hyyp) version which was a fork from [RenierM26's](https://github.com/RenierM26/hass_ids_hyyp) original version.
+    - [francoistk](https://github.com/francoistk/hass_ids_hyyp) fixed the bug that a stay profile is required for every partition.
+
 
 
 
