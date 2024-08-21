@@ -47,7 +47,7 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
     
     def _update_fcm_data(self, data):        
         if data == "restart_push_receiver":     
-            self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data)
+            self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data, restart=True)
             return         
         if "notification" not in data:
             return
