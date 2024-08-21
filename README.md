@@ -154,6 +154,10 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.7.2b2**
+- Fix an issue where FCM credetials can't be obtained. 
+    - Update the FCM notification system to use the Google v1 API
+
 **Version 1.7.1**
 - Minor clean-up to the readme.
 
