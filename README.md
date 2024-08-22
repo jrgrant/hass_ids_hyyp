@@ -155,12 +155,12 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 # Changelog:
 
 
-**Version 1.7.2b6**
-- Updated the API to new a FCM reconnect method which should be more reliable after internet outage
+**Version 1.7.3**
+- Created a new FCM reconnect method which should be more reliable after internet outage.
 
-**Version 1.7.2b2**
+**Version 1.7.2**
 - Fix an issue where FCM credetials can't be obtained. 
-    - Update the FCM notification system to use the Google v1 API
+    - Updated the FCM notification system to use the Google v1 API
 
 **Version 1.7.1**
 - Minor clean-up to the readme.
