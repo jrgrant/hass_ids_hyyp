@@ -81,7 +81,6 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         
 
     def _generic_callback_for_data_from_api(self, data):
-        _LOGGER.warning(data)
         if "arm_fail_cause" in data:
             short_json = data["arm_fail_cause"]
             if isinstance(short_json, str):
@@ -97,8 +96,6 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
 
     def _init_FCM_notifications(self):    
         pids = self._read_fcm_pids()
-        # _LOGGER.warning("Here are the PIDS ^^^")
-        # _LOGGER.warning(pids)
         self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data, persistent_pids=pids)
         
         
