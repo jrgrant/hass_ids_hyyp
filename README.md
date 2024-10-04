@@ -154,7 +154,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.7.4b1** (Test version)
+**Version 1.8.0b1** (Test version)
 - Added persistent IDs for FCM notifications (new location). 
     - Using the .share location which should work for all platforms. Rolling out a test version
     - Add a new sensor which *should* show why the alarm didn't arm i.e. which zone is causing the error.
