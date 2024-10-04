@@ -30,7 +30,8 @@ from .const import (
     DEFAULT_POLL_TIME,
     POLLING_TIME_NEVER_POLL,
     POLLING_TIME_24_HOURS,
-    IMEI
+    IMEI,
+    FCM_PERSISTENTIDFILE
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -38,11 +39,16 @@ DEFAULT_OPTIONS = {
     CONF_TIMEOUT: DEFAULT_TIMEOUT,
 }
 
+def _initialize_push_receiver_PID_file():
+    fcmfile = open(FCM_PERSISTENTIDFILE, "w")
+    fcmfile.close()
+    
     
 def _validate_and_create_auth(data: dict) -> dict[str, Any]:
     """Try to login to IDS Hyyp account and return token."""
     # Verify cloud credentials by attempting a login request with username and password.
     # Return login token.
+    _initialize_push_receiver_PID_file()
     imei = str(HyypClient().generate_imei())
     hyyp_client = HyypClient(
         data[CONF_EMAIL],

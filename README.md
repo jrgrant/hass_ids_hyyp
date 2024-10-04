@@ -154,6 +154,38 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.7.4b1** (Test version)
+- Added persistent IDs for FCM notifications (new location). 
+    - Using the .share location which should work for all platforms. Rolling out a test version
+    - Add a new sensor which *should* show why the alarm didn't arm i.e. which zone is causing the error.
+        - The feedback from IDS servers with regards to actions can be unreliable (i.e. showing "FAIL" when it actually worked or "SUCCESS" when it didn't). This new sensor should therefor be used with "caution" for now. I may or may not keep it depending on reliability.
+        `sensor.[site]_arm_failure_cause`
+        
+
+        When issues are found it will be in a json format, (details tbc - Look at the value of the sensor for now)
+        
+        
+        Here's an example jinja template that can be used to extract information (Change the sensor name)
+
+       <code>
+
+            {% set sensor_name = 'sensor.huis_arm_failure_cause' %}
+            {% set notification = states(sensor_name)|from_json %} 
+            {% set zones =  notification.zones %} 
+
+            {{ notification }}
+            {{ notification.failure_cause }}
+            {{ notification.timestamp }}
+
+            {% if notification.failure_cause %}
+            {% for i in zones.keys() %}
+                {{"Zone number: " + i}}
+                {{"Zone name: " + zones[i]}}
+            {% endfor %}
+            {% endif %}
+
+       </code> 
+
 
 **Version 1.7.3**
 - Created a new FCM reconnect method which should be more reliable after internet outage.
