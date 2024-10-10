@@ -154,6 +154,24 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.8.0b10** (Test version)
+- Removed persistent ID save again
+- Changed FCM system to renew tokens if the session resets.
+- Added a sensor which shows cause for arm failure
+  - Reworked this sensor. Now uses data directly from IDS via push notification system
+
+    Here's an example jinja template that can be used to extract information (Change the sensor name)
+ 
+        {% set sensor_name = 'sensor.huis_arm_failure_cause' %}
+        {% set notification = states(sensor_name)|from_json %} 
+
+        {{ notification.title }}
+        {{ notification.body }}
+        {{ notification.timestamp }}
+
+
+
+
 **Version 1.8.0b1** (Test version)
 - Added persistent IDs for FCM notifications (new location). 
     - Using the .share location which should work for all platforms. Rolling out a test version
