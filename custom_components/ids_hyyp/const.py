@@ -8,11 +8,10 @@ MODEL = "Hyyp"
 CONF_PKG = "pkg"
 USER_ID = "userId"
 POLLING_TIME = "polling_time"
-FCM_CREDENTIALS = "fcm_credentials"
-IMEI = "imei"
 
 # Package types
-PKG_IDS_HYYP = "com.hyyp247.home"
+#PKG_IDS_HYYP = "com.hyyp247.home"
+PKG_IDS_HYYP = "com.hyyp247.ios"
 PKG_ADT_SECURE_HOME = "za.co.adt.securehome.android"
 
 # Pacakage Alias
@@ -42,4 +41,3 @@ SERVICE_STAY_PROFILE_ARM = "stay_profile_arm"
 ATTR_BYPASS_CODE = "bypass_code"
 ATTR_ARM_CODE = "arm_code"
 
-FCM_PERSISTENTIDFILE = '.storage/ids_hyyp_persistent_ids.json'

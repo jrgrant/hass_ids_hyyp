@@ -12,7 +12,7 @@ from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError, InvalidURL
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DOMAIN, FCM_PERSISTENTIDFILE
+from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -46,29 +46,48 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         except (InvalidURL, HTTPError, HyypApiError) as error:
             raise UpdateFailed(f"Invalid response from API: {error}") from error
     
-    def _update_fcm_data(self, data):
-        if "new_persistent_id" in data:
-            newid = data["new_persistent_id"]
-            self._append_fcm_pids(pid=newid)          
+    def _update_fcm_data(self, data):       
         if data == "restart_push_receiver":     
+
             self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data, restart=True)
-            return         
-        if "notification" not in data:
             return
-        if "data" not in data["notification"]:
-            return
-        if "notification" not in data["notification"]["data"]:
-            return
-        short_json = data["notification"]["data"]["notification"]
-        if isinstance(short_json, str):
-            short_json = json.loads(short_json)
-        short_json["timestamp"] = time.time() 
-        message = json.dumps(short_json)
-        self._update_push_notification_entity(message) 
+
+        
+        try:
+            msgtype = data['notification']['data']['message']
+            if msgtype.find("PUSH") == 0:
+                self._update_push_notification_entity(data=data)
+                return
+            if msgtype.find("ERROR") == 0:
+                self._update_fail_cause_entity(data=data)
+                return
+        except KeyError:
+            pass
+    
     
     def _update_push_notification_entity(self, data):
-        for callback in self.push_notification_entity_callback_methods:
-            callback(data=data)
+
+        try:
+            short_json = data["notification"]["notification"]
+            if isinstance(short_json, str):
+                short_json = json.loads(short_json)
+            short_json["timestamp"] = time.time() 
+            message = json.dumps(short_json)        
+            for callback in self.push_notification_entity_callback_methods:
+                callback(data=message)
+        except KeyError:
+            return
+        
+    def _update_fail_cause_entity(self, data):
+        try:
+            short_json = data["notification"]["notification"]
+            if isinstance(short_json, str):
+                short_json = json.loads(short_json)
+            short_json["timestamp"] = time.time() 
+            message = json.dumps(short_json)        
+            self._arm_fail_cause_callback_method(message)
+        except KeyError:
+            return
         
     def _register_callback_for_push_notification_entity(self, callback):
         self.push_notification_entity_callback_methods.append(callback)     
@@ -95,22 +114,5 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         
 
     def _init_FCM_notifications(self):    
-        pids = self._read_fcm_pids()
-        self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data, persistent_pids=pids)
+        self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data)
         
-        
-    def _read_fcm_pids(self):
-        pidfile = open(FCM_PERSISTENTIDFILE, "a" )
-        pidfile.close()
-        pidfile = open(FCM_PERSISTENTIDFILE, "r")
-        raw_info = pidfile.read()
-        pids = raw_info.split("\n")
-        pidfile.close()
-        return pids
-    
-    def _append_fcm_pids(self, pid):
-        pid = str(pid)
-        pidfile = open(FCM_PERSISTENTIDFILE, "a" )
-        pidfile.write(pid + "\n")
-        pidfile.close()
-     
