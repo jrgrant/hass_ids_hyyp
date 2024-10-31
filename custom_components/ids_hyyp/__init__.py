@@ -19,6 +19,8 @@ from .const import (
     DOMAIN,
     POLLING_TIME,
     DEFAULT_POLL_TIME,
+    FCM_CREDENTIALS,
+    IMEI,
 )
 from .coordinator import HyypDataUpdateCoordinator
 
@@ -45,11 +47,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         }
 
         hass.config_entries.async_update_entry(entry, options=options)
+   
+
+    _fcm_credentials = entry.data[FCM_CREDENTIALS]
     hyyp_client = HyypClient(token=entry.data[CONF_TOKEN],
                              pkg=entry.data[CONF_PKG],
                              userid=entry.data[USER_ID],
+                             imei=entry.data[IMEI],
+                             fcm_credentials=_fcm_credentials,
                              )
-    
+
 
     if entry.options.get(POLLING_TIME) is None:
         update_time = int(DEFAULT_POLL_TIME)
@@ -58,7 +65,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         
     coordinator = HyypDataUpdateCoordinator(
-        hass, api=hyyp_client, api_timeout=DEFAULT_TIMEOUT, update_time=update_time
+        hass, entry, api=hyyp_client, api_timeout=DEFAULT_TIMEOUT, update_time=update_time
     )
 
     hass.data[DOMAIN][entry.entry_id] = {DATA_COORDINATOR: coordinator}

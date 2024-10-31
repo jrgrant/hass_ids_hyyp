@@ -154,6 +154,11 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+
+**Version 1.8.1b2** (Test version)
+- Major rework to the FCM system.  Fixed an issue where FCM stopped working due to google changes on the backend.
+    - Now using Firebase messenger API to manage FCM communication
+
 **Version 1.8.0b10** (Test version)
 - Removed persistent ID save again
 - Changed FCM system to renew tokens if the session resets.
@@ -168,8 +173,6 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
         {{ notification.title }}
         {{ notification.body }}
         {{ notification.timestamp }}
-
-
 
 
 **Version 1.8.0b1** (Test version)

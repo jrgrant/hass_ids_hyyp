@@ -29,6 +29,8 @@ from .const import (
     DEFAULT_POLL_TIME,
     POLLING_TIME_NEVER_POLL,
     POLLING_TIME_24_HOURS,
+    IMEI,
+    FCM_CREDENTIALS
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -43,16 +45,20 @@ def _validate_and_create_auth(data: dict) -> dict[str, Any]:
     # Verify cloud credentials by attempting a login request with username and password.
     # Return login token.
 
+    imei = str(HyypClient().generate_imei())
     hyyp_client = HyypClient(
-        data[CONF_EMAIL],
-        data[CONF_PASSWORD],
-        data[CONF_PKG],
+        email=data[CONF_EMAIL],
+        password=data[CONF_PASSWORD],
+        pkg=data[CONF_PKG],
+        imei=imei
     )
     hyyp_token = hyyp_client.login()
 
     return {CONF_TOKEN: hyyp_token[CONF_TOKEN], 
             CONF_PKG: data[CONF_PKG],
             USER_ID: hyyp_token["user"]["id"],
+            IMEI: imei,
+            FCM_CREDENTIALS: None
             }
 
 

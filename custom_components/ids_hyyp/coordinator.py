@@ -10,9 +10,10 @@ from pyhyypapihawkmod.client import HyypClient
 from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError, InvalidURL
 
 from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DOMAIN
+from .const import DOMAIN, FCM_CREDENTIALS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -20,7 +21,7 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching IDSHyyp data."""
 
     def __init__(
-        self, hass: HomeAssistant, *, api: HyypClient, api_timeout: int, update_time: int = 30
+        self, hass: HomeAssistant, entry: ConfigEntry, *, api: HyypClient, api_timeout: int, update_time: int = 30
     ) -> None:
         """Initialize global IDS Hyyp data updater."""
         self.hyyp_client = api
@@ -29,6 +30,8 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         self.push_notification_entity_callback_methods = []
         self.poll_interval_callback_method = None
         self._arm_fail_cause_callback_method = None
+        self.hass = hass
+        self.entry = entry
         
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=update_interval)
         self.hyyp_client.register_generic_callback_to_hass(callback=self._generic_callback_for_data_from_api)
@@ -46,29 +49,10 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         except (InvalidURL, HTTPError, HyypApiError) as error:
             raise UpdateFailed(f"Invalid response from API: {error}") from error
     
-    def _update_fcm_data(self, data):       
-        if data == "restart_push_receiver":     
-
-            self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data, restart=True)
-            return
-
-        
-        try:
-            msgtype = data['notification']['data']['message']
-            if msgtype.find("PUSH") == 0:
-                self._update_push_notification_entity(data=data)
-                return
-            if msgtype.find("ERROR") == 0:
-                self._update_fail_cause_entity(data=data)
-                return
-        except KeyError:
-            pass
-    
     
     def _update_push_notification_entity(self, data):
-
         try:
-            short_json = data["notification"]["notification"]
+            short_json = data["notification"]
             if isinstance(short_json, str):
                 short_json = json.loads(short_json)
             short_json["timestamp"] = time.time() 
@@ -80,7 +64,7 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         
     def _update_fail_cause_entity(self, data):
         try:
-            short_json = data["notification"]["notification"]
+            short_json = data["notification"]
             if isinstance(short_json, str):
                 short_json = json.loads(short_json)
             short_json["timestamp"] = time.time() 
@@ -99,7 +83,25 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         self._arm_fail_cause_callback_method = callback       
         
 
+
+
     def _generic_callback_for_data_from_api(self, data):
+         
+        if data == "restart_push_receiver":     
+            self.hyyp_client.initialize_fcm_notification_listener()
+            return
+        
+        if "new_PID" in data:
+            new_PID = data["new_PID"]
+            # _LOGGER.warning("new_PID ^^^")
+            # _LOGGER.warning(new_PID)  
+            return          
+        
+        if "fcm_credentials" in data:
+            _fcm_credentials = data["fcm_credentials"]
+            self.update_fcm_credentials(new_credentials=_fcm_credentials)
+            return
+        
         if "arm_fail_cause" in data:
             short_json = data["arm_fail_cause"]
             if isinstance(short_json, str):
@@ -111,8 +113,37 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         
         if "fcm_data" in data:
             self._update_fcm_data(data=data["fcm_data"])
+            return
         
+            
 
     def _init_FCM_notifications(self):    
-        self.hyyp_client.initialize_fcm_notification_listener(callback=self._update_fcm_data)
+        self.hyyp_client.initialize_fcm_notification_listener()
         
+    def _update_fcm_data(self, data):
+        try:
+            msgtype = data['data']['message']
+            if msgtype.find("PUSH") == 0:
+                self._update_push_notification_entity(data=data)
+                return
+            if msgtype.find("ERROR") == 0:
+                self._update_fail_cause_entity(data=data)
+                return
+        except KeyError:
+            pass
+    
+    
+    def update_fcm_credentials(self, new_credentials):
+        new_data = {**self.entry.data}
+        new_data[FCM_CREDENTIALS] = new_credentials       
+        self.hass.loop.call_soon_threadsafe(
+            lambda: self.hass.config_entries.async_update_entry(
+                self.entry,
+                data=new_data,
+            )
+        )
+             
+
+    def show_me_fcm_creds_debug(self):
+        _LOGGER.warning("Current entrydata")
+        _LOGGER.warning(self.entry.data)
