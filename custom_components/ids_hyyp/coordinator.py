@@ -90,7 +90,7 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
 
     def _generic_callback_for_data_from_api(self, data):
         if data == HASS_CALLBACK_KEY_RESTART_FCM:     
-            self.hyyp_client.initialize_fcm_notification_listener()
+            self.hyyp_client.initialize_fcm_notification_listener(restart=True)
             return
         
         if HASS_CALLBACK_KEY_NEW_PID in data:
@@ -100,11 +100,8 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
             return          
         
         if HASS_CALLBACK_KEY_FCM_CREDENTIALS in data:
-            _LOGGER.warning("Restarting FCM system")
             _fcm_credentials = data[HASS_CALLBACK_KEY_FCM_CREDENTIALS]
             self.update_fcm_credentials(new_credentials=_fcm_credentials)
-            self.hyyp_client.fcm_credentials = _fcm_credentials
-            self.hyyp_client.initialize_fcm_notification_listener()
             return   
         
         if HASS_CALLBACK_KEY_FCM_DATA in data:
@@ -124,7 +121,7 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
                 self._update_fail_cause_entity(data=data)
                 return
         except KeyError:
-            pass
+            return
     
     
     def update_fcm_credentials(self, new_credentials):
