@@ -154,6 +154,8 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.8.1b3** (Test Version)
+- Update to new FCM system to better manage reconnects and credential updates
 
 **Version 1.8.1b2** (Test version)
 - Major rework to the FCM system.  Fixed an issue where FCM stopped working due to google changes on the backend.

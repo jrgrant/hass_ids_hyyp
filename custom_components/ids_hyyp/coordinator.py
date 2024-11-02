@@ -8,12 +8,17 @@ import time
 from async_timeout import timeout
 from pyhyypapihawkmod.client import HyypClient
 from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError, InvalidURL
+from pyhyypapihawkmod.constants import (HASS_CALLBACK_KEY_RESTART_FCM,
+                                        HASS_CALLBACK_KEY_FCM_CREDENTIALS,
+                                        HASS_CALLBACK_KEY_FCM_DATA,
+                                        HASS_CALLBACK_KEY_NEW_PID)
 
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DOMAIN, FCM_CREDENTIALS
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -83,39 +88,28 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
         self._arm_fail_cause_callback_method = callback       
         
 
-
-
     def _generic_callback_for_data_from_api(self, data):
-         
-        if data == "restart_push_receiver":     
+        if data == HASS_CALLBACK_KEY_RESTART_FCM:     
             self.hyyp_client.initialize_fcm_notification_listener()
             return
         
-        if "new_PID" in data:
-            new_PID = data["new_PID"]
+        if HASS_CALLBACK_KEY_NEW_PID in data:
+            new_PID = data[HASS_CALLBACK_KEY_NEW_PID]
             # _LOGGER.warning("new_PID ^^^")
             # _LOGGER.warning(new_PID)  
             return          
         
-        if "fcm_credentials" in data:
-            _fcm_credentials = data["fcm_credentials"]
+        if HASS_CALLBACK_KEY_FCM_CREDENTIALS in data:
+            _LOGGER.warning("Restarting FCM system")
+            _fcm_credentials = data[HASS_CALLBACK_KEY_FCM_CREDENTIALS]
             self.update_fcm_credentials(new_credentials=_fcm_credentials)
-            return
+            self.hyyp_client.fcm_credentials = _fcm_credentials
+            self.hyyp_client.initialize_fcm_notification_listener()
+            return   
         
-        if "arm_fail_cause" in data:
-            short_json = data["arm_fail_cause"]
-            if isinstance(short_json, str):
-                short_json = json.loads(short_json)
-            short_json["timestamp"] = time.time() 
-            message = json.dumps(short_json)          
-            self._arm_fail_cause_callback_method(message)
+        if HASS_CALLBACK_KEY_FCM_DATA in data:
+            self._update_fcm_data(data=data[HASS_CALLBACK_KEY_FCM_DATA])
             return
-        
-        if "fcm_data" in data:
-            self._update_fcm_data(data=data["fcm_data"])
-            return
-        
-            
 
     def _init_FCM_notifications(self):    
         self.hyyp_client.initialize_fcm_notification_listener()
@@ -143,7 +137,3 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
             )
         )
              
-
-    def show_me_fcm_creds_debug(self):
-        _LOGGER.warning("Current entrydata")
-        _LOGGER.warning(self.entry.data)
