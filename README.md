@@ -154,7 +154,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
-**Version 1.8.1b3** (Test Version)
+**Version 1.8.1b5** (Test Version)
 - Update to new FCM system to better manage reconnects and credential updates
 
 **Version 1.8.1b2** (Test version)
