@@ -23,6 +23,31 @@ IDS Hyyp integration for Home Assistant
 - Supports "Cell phone" type push notifications from IDS. These are the same as the notifications that you'd normally receive on your cellphone with the HYYP App.
     - Push notification summary is shown in `sensor.[site]_ids_push_notifications`.
     - You can for example add a HASS push notification to your phone automation to get "instant" notifications similar to the IDS app.
+    - `sensor.[site]_ids_push_notifications` returns a json encoded string in the following format:
+    
+
+    ```
+
+    {"title": [string containing title], 
+    "body": [string containing the actual message], 
+    "timestamps": { "event_panel_time": [unix timestamp - alarm panel time when event occurred], 
+                    "hass_received": [unix timestamp - home assistant time when notification was received]
+                    }
+    }
+    ```
+
+    - Here's example jinja template code for showing the various values of the notification
+    
+    ```
+    {% set sensor_name = 'sensor.[site_id]_ids_push_notifications' %}
+    {% set notification = states(sensor_name)|from_json %}
+    {{ notification.title }}
+    {{ notification.body }}
+    {{ notification.timestamps.event_panel_time }}
+    {{ notification.timestamps.hass_received }}
+    ```
+
+
 - Adjustable polling time
     - For use with "GSM Modules"
         *The IDS GSM Modules seem to have a monthly limit of 50MB, and a certain daily limit.*
@@ -56,12 +81,7 @@ IDS Hyyp integration for Home Assistant
             - *It's recommended you use the `sensor.[site]_ids_push_notifications` if you need "live" data*   
             - *You should handle any home assistant triggers with automations* 
             - *Note multiple sensors can trigger the alarm at the same time if it's armed*
-
-    
-
-
-            
-  
+     
 - Multiple stay profiles.  
     *Note that the Home Assistant built in "Alarm Control Panel" entity does not support this, so you will have to create buttons / entity cards etc. to use this feature.*
     - Creates a `button.[site_name]_[partition_name]_[stay_profile_name]` button entity which can be used to arm a specific stay profile. You can also switch between stay profiles while armed in a stay profile.
@@ -70,6 +90,28 @@ IDS Hyyp integration for Home Assistant
 - IDS "Automations" / "Triggers".  
     *"Automations" is the term used in the IDS app to activate programmable outputs on the panel e.g. to open your gate or garage door. The IDS app also calls it "Triggers"*
     - Creates a `button.[site_name]_[automation_name]` button entity. This entity pushes the "automation" button similar to pushing the button in the IDS app.
+
+
+- `sensor.[site_id]_arm_failure_cause` shows the reason for a failure (arm, disarm, bypass, etc.). This information is received via FCM from IDS servers.
+    - `sensor.[site_id]_arm_failure_cause` returns a json encoded string in the following format:
+
+        ```
+        {"title": [string containing the title],
+        "body": [string containing the reason for failure], 
+        "timestamp": [unix timestamp of when the notification was received by home assistant]
+        }
+        ```
+
+    - Here's example jinja template code for showing the various values of the notification
+ 
+        ```
+        {% set sensor_name = 'sensor.[site_id]_arm_failure_cause' %}
+        {% set notification = states(sensor_name)|from_json %} 
+        {{ notification.title }}
+        {{ notification.body }}
+        {{ notification.timestamp }}
+        ```
+
 
 
     <br><br>
@@ -154,6 +196,21 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+
+
+**Version 1.8.2b1** (Test Version)
+
+- `sensor.[site]_ids_push_notifications` now contains 2 timestamps in the json dict
+    - `sensor.[site]_ids_push_notifications.timestamps.hass_received` - This is the Unix timestamp of when the push notification was received by home assisstant
+    - `sensor.[site]_ids_push_notifications.timestamps.event_panel_time` - Time is the Unix timestamp of the actual alarm panel when the event occurred. If the panel's time wasn't set at the time of the event it defaults to an earlier date. The panel on which I tested, defaults to `1276207251` which is 11 June 2010 00:00:00 GMT+2.
+
+    - Note that `sensor.[site]_ids_push_notifications.timestamp` is now deprecated and will be removed. If you've used this timestamp you need to update your templates or automations.
+        - `sensor.[site]_ids_push_notifications.timestamps.hass_received` is the direct replacement for this.
+
+
+
+Timestamps for receive and sent <><<<<<<>>>>>>  {"timestamp"} will be deprecated
+
 **Version 1.8.1b5** (Test Version)
 - Update to new FCM system to better manage reconnects and credential updates
 
@@ -167,9 +224,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 - Added a sensor which shows cause for arm failure
   - Reworked this sensor. Now uses data directly from IDS via push notification system
 
-    Here's an example jinja template that can be used to extract information (Change the sensor name)
+    Here's an example jinja template that can be used to extract information (Change the sensor name and site_id)
  
-        {% set sensor_name = 'sensor.huis_arm_failure_cause' %}
+        {% set sensor_name = 'sensor.[site_id]_arm_failure_cause' %}
         {% set notification = states(sensor_name)|from_json %} 
 
         {{ notification.title }}

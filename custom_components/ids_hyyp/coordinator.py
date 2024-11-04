@@ -56,16 +56,29 @@ class HyypDataUpdateCoordinator(DataUpdateCoordinator):
     
     
     def _update_push_notification_entity(self, data):
+        short_json = None
         try:
             short_json = data["notification"]
             if isinstance(short_json, str):
                 short_json = json.loads(short_json)
-            short_json["timestamp"] = time.time() 
-            message = json.dumps(short_json)        
-            for callback in self.push_notification_entity_callback_methods:
-                callback(data=message)
+            hass_received_timestamp = time.time()
+            short_json["timestamp"] = hass_received_timestamp
         except KeyError:
             return
+        
+        try:
+            message_meta = json.loads(data["data"]["message"][5:])
+            event_panel_timestamp = message_meta["timestamp"]/1000
+            short_json["timestamps"] = {"event_panel_time": event_panel_timestamp,
+                                        "hass_received": hass_received_timestamp
+            }
+        except KeyError:
+            _LOGGER.warning("Can't find the timestamp in the push notification")
+                
+        if short_json:
+            message = json.dumps(short_json)
+            for callback in self.push_notification_entity_callback_methods:
+                callback(data=message)
         
     def _update_fail_cause_entity(self, data):
         try:
