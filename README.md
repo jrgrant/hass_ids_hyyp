@@ -198,7 +198,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 
 
-**Version 1.8.2b1** (Test Version)
+**Version 1.8.2RC1** (1.8.0 > 1.8.2)
 
 - `sensor.[site]_ids_push_notifications` now contains 2 timestamps in the json dict
     - `sensor.[site]_ids_push_notifications.timestamps.hass_received` - This is the Unix timestamp of when the push notification was received by home assisstant
@@ -207,22 +207,11 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
     - Note that `sensor.[site]_ids_push_notifications.timestamp` is now deprecated and will be removed. If you've used this timestamp you need to update your templates or automations.
         - `sensor.[site]_ids_push_notifications.timestamps.hass_received` is the direct replacement for this.
 
-
-
-Timestamps for receive and sent <><<<<<<>>>>>>  {"timestamp"} will be deprecated
-
-**Version 1.8.1b5** (Test Version)
-- Update to new FCM system to better manage reconnects and credential updates
-
-**Version 1.8.1b2** (Test version)
 - Major rework to the FCM system.  Fixed an issue where FCM stopped working due to google changes on the backend.
     - Now using Firebase messenger API to manage FCM communication
-
-**Version 1.8.0b10** (Test version)
-- Removed persistent ID save again
-- Changed FCM system to renew tokens if the session resets.
+    - Updated the new FCM system to better manage reconnects and credential updates
 - Added a sensor which shows cause for arm failure
-  - Reworked this sensor. Now uses data directly from IDS via push notification system
+  - Uses data directly from IDS via push notification system
 
     Here's an example jinja template that can be used to extract information (Change the sensor name and site_id)
  
@@ -234,37 +223,6 @@ Timestamps for receive and sent <><<<<<<>>>>>>  {"timestamp"} will be deprecated
         {{ notification.timestamp }}
 
 
-**Version 1.8.0b1** (Test version)
-- Added persistent IDs for FCM notifications (new location). 
-    - Using the .share location which should work for all platforms. Rolling out a test version
-    - Add a new sensor which *should* show why the alarm didn't arm i.e. which zone is causing the error.
-        - The feedback from IDS servers with regards to actions can be unreliable (i.e. showing "FAIL" when it actually worked or "SUCCESS" when it didn't). This new sensor should therefor be used with "caution" for now. I may or may not keep it depending on reliability.
-        `sensor.[site]_arm_failure_cause`
-        
-
-        When issues are found it will be in a json format, (details tbc - Look at the value of the sensor for now)
-        
-        
-        Here's an example jinja template that can be used to extract information (Change the sensor name)
-
-       <code>
-
-            {% set sensor_name = 'sensor.huis_arm_failure_cause' %}
-            {% set notification = states(sensor_name)|from_json %} 
-            {% set zones =  notification.zones %} 
-
-            {{ notification }}
-            {{ notification.failure_cause }}
-            {{ notification.timestamp }}
-
-            {% if notification.failure_cause %}
-            {% for i in zones.keys() %}
-                {{"Zone number: " + i}}
-                {{"Zone name: " + zones[i]}}
-            {% endfor %}
-            {% endif %}
-
-       </code> 
 
 
 **Version 1.7.3**
