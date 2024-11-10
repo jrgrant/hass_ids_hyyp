@@ -198,7 +198,7 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 
 
-**Version 1.8.2RC1** (1.8.0 > 1.8.2)
+**Version 1.8.2** (1.8.0 > 1.8.2)
 
 - `sensor.[site]_ids_push_notifications` now contains 2 timestamps in the json dict
     - `sensor.[site]_ids_push_notifications.timestamps.hass_received` - This is the Unix timestamp of when the push notification was received by home assisstant
