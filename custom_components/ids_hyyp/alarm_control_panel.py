@@ -1,4 +1,5 @@
 """Support for IDS Hyyp alarms."""
+
 from __future__ import annotations
 
 from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError
@@ -7,14 +8,9 @@ from homeassistant.components.alarm_control_panel import (
     AlarmControlPanelEntity,
     AlarmControlPanelEntityFeature,
     CodeFormat,
+    AlarmControlPanelState,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import (
-    STATE_ALARM_ARMED_AWAY,
-    STATE_ALARM_ARMED_HOME,
-    STATE_ALARM_DISARMED,
-    STATE_ALARM_TRIGGERED,
-)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
@@ -82,14 +78,14 @@ class HyypAlarm(HyypPartitionEntity, AlarmControlPanelEntity):
         """Update alarm state."""
 
         if self.partition_data["alarm"]:
-            return STATE_ALARM_TRIGGERED
+            return AlarmControlPanelState.TRIGGERED
 
         if self.partition_data["armed"]:
             if "stayArmed" in self.partition_data and self.partition_data["stayArmed"]:
-                return STATE_ALARM_ARMED_HOME          
-            return STATE_ALARM_ARMED_AWAY
+                return AlarmControlPanelState.ARMED_HOME
+            return AlarmControlPanelState.ARMED_AWAY
 
-        return STATE_ALARM_DISARMED
+        return AlarmControlPanelState.DISARMED
 
     async def async_alarm_disarm(self, code: str | None = None) -> None:
         """Send disarm command."""
