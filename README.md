@@ -196,7 +196,9 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 ---
 # Changelog:
 
+**Version 1.8.3** 
 
+- Fixed future deprecation warnings from home assistant (HASS 2024.11.xx)
 
 **Version 1.8.2** (1.8.0 > 1.8.2)
 

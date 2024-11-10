@@ -2,18 +2,17 @@
 
 from __future__ import annotations
 
-from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError
-
 from homeassistant.components.alarm_control_panel import (
     AlarmControlPanelEntity,
     AlarmControlPanelEntityFeature,
-    CodeFormat,
     AlarmControlPanelState,
+    CodeFormat,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
+from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError
 
 from .const import ATTR_ARM_CODE, DATA_COORDINATOR, DOMAIN
 from .coordinator import HyypDataUpdateCoordinator
@@ -21,7 +20,7 @@ from .entity import HyypPartitionEntity
 
 PARALLEL_UPDATES = 1
 async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up alarm control panel."""
     coordinator: HyypDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id][
@@ -34,7 +33,7 @@ async def async_setup_entry(
             HyypAlarm(coordinator, site_id, partition_id, arm_code)
             for site_id in coordinator.data
             for partition_id in coordinator.data[site_id]["partitions"]
-        ]
+        ],
     )
 
 
@@ -74,9 +73,8 @@ class HyypAlarm(HyypPartitionEntity, AlarmControlPanelEntity):
         return bool(self.data["isOnline"])
 
     @property
-    def state(self) -> StateType:
+    def alarm_state(self) -> StateType:
         """Update alarm state."""
-
         if self.partition_data["alarm"]:
             return AlarmControlPanelState.TRIGGERED
 
