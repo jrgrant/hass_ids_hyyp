@@ -173,8 +173,7 @@ HACS Method is recommended. If you know how to use SSH or another uploading meth
 
 ## Requirements
 
-- Requires Home Assistant version 2023.4 and newer.
-    - Version 2023.7.3 and newer is recommended.
+- Requires Home Assistant version 2024.11 and newer.
 - Due to the integration connecting to IDS servers, the Home Assistant server requires an internet connection.
 
 
