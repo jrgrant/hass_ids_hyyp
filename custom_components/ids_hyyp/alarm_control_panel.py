@@ -12,6 +12,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
+from homeassistant.exceptions import ServiceValidationError
 from pyhyypapihawkmod.exceptions import HTTPError, HyypApiError
 
 from .const import ATTR_ARM_CODE, DATA_COORDINATOR, DOMAIN
@@ -101,11 +102,9 @@ class HyypAlarm(HyypPartitionEntity, AlarmControlPanelEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError("Cannot disarm alarm") from err
 
-        if update_ok["status"] == "SUCCESS":
-            await self.coordinator.async_request_refresh()
-
-        else:
-            raise HTTPError(f"Cannot disarm alarm: {update_ok}")
+        await self.coordinator.async_request_refresh()
+        if update_ok["status"] != "SUCCESS":
+            raise ServiceValidationError("Cannot disarm alarm. Refresh, confirm and try again")
 
     async def async_alarm_arm_away(self, code: str | None = None) -> None:
         """Send arm away command."""
@@ -123,11 +122,9 @@ class HyypAlarm(HyypPartitionEntity, AlarmControlPanelEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError("Cannot arm alarm") from err
 
-        if update_ok["status"] == "SUCCESS":
-            await self.coordinator.async_request_refresh()
-
-        else:
-            raise HTTPError(f"Cannot arm alarm, check for violated zones. {update_ok}")
+        await self.coordinator.async_request_refresh()
+        if update_ok["status"] != "SUCCESS":
+            raise ServiceValidationError("Cannot arm alarm. Check for violated zones or refresh, confirm and try again")
 
     async def async_alarm_arm_home(self, code: str | None = None) -> None:
         """Send arm home command."""
@@ -146,13 +143,9 @@ class HyypAlarm(HyypPartitionEntity, AlarmControlPanelEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError("Cannot arm home alarm") from err
 
-        if update_ok["status"] == "SUCCESS":
-            await self.coordinator.async_request_refresh()
-
-        else:
-            raise HTTPError(
-                f"Cannot arm home alarm, check for violated zones. {update_ok}"
-            )
+        await self.coordinator.async_request_refresh()
+        if update_ok["status"] != "SUCCESS":
+            raise ServiceValidationError("Cannot arm alarm. Check for violated zones or refresh, confirm and try again")
 
     async def async_alarm_trigger(self, code: str | None = None) -> None:
         """Send alarm trigger."""
@@ -169,8 +162,6 @@ class HyypAlarm(HyypPartitionEntity, AlarmControlPanelEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError("Cannot trigger alarm") from err
 
-        if update_ok["status"] == "SUCCESS":
-            await self.coordinator.async_request_refresh()
-
-        else:
-            raise HTTPError(f"Cannot trigger alarm. {update_ok}")
+        await self.coordinator.async_request_refresh()
+        if update_ok["status"] != "SUCCESS":
+            raise ServiceValidationError("Cannot trigger alarm, confirm and try again")

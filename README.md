@@ -12,8 +12,9 @@ IDS Hyyp integration for Home Assistant
 - [Features](#features)
 - [Examples](#examples)
 - [Installation](#installation)
-- [About](#about)
     - [Requirements](#requirements)
+    - [Installing](#installing)
+- [About](#about)
     - [Help](#help)
 - [Changelog](#changelog)
 
@@ -140,13 +141,19 @@ Example of a simple "panel" which has multiple stay profiles
 
 
 # Installation
-**HACS Method** 
 
-Get HACS here: (https://hacs.xyz/docs/setup/download/)
+## Requirements
 
-Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
+- Requires Home Assistant version 2024.11 and newer.
+- Due to the integration connecting to IDS servers, the Home Assistant server requires an internet connection.
+- Get HACS here: (https://hacs.xyz/docs/use/download/download/)
 
-0) DELETE THE OLD VERSION! (If you still have the old Pre 2023.4 version by @RenierM26)
+## Installing
+
+Steps in 1-4 Youtube video: **https://youtu.be/PcCEC4NRbYA**
+
+0. DELETE THE OLD VERSION! (If you still have the old Pre 2023.4 version by @RenierM26)
+
 1) Add the following custom repository to HACS: https://github.com/hawky358/hass_ids_hyyp
 2) Download the integration using HACS 
 3) Restart Home Assistant
@@ -155,6 +162,7 @@ Steps in 1-4 Youtube video: **http://www.youtube.com/watch?v=FGoE4XzUE38**
 HACS Method is recommended. If you know how to use SSH or another uploading method, you probably don't need a guide.
 
 
+Old Steps in 1-4 Youtube video (HACS < 2.00 ): http://www.youtube.com/watch?v=FGoE4XzUE38
 
 # About
 
@@ -169,12 +177,6 @@ HACS Method is recommended. If you know how to use SSH or another uploading meth
 - With Home Assistant version 2023.4 this integration broke and there was no longer any support or updates from the original developer.
 - "hawkMod" is the name of this fork which was created to fix the integration for 2023.4. The name was changed to distinguish it from the original and to prevent any confusion with the original version.
 - hawkMod uses a different [modified API](https://github.com/hawky358/pyHyypApi) and has also added several features and bugfixes (See changelog below)
-
-
-## Requirements
-
-- Requires Home Assistant version 2024.11 and newer.
-- Due to the integration connecting to IDS servers, the Home Assistant server requires an internet connection.
 
 
 ## Help
@@ -194,6 +196,11 @@ Support, updates, bugfixes, features, etc. will be limited, but I will help wher
 
 ---
 # Changelog:
+
+
+**Version 1.8.4b1**
+- Changed the way certain exceptions are shown and logged. e.g. When a bypass or arm fails, the full stack trace is no longer dumped, but an error is logged. This was done since IDS servers sometimes give "FAILURES" when the action has actually succeeded. It is also showing a "friendlier" message for users to understand.
+
 
 **Version 1.8.3** 
 

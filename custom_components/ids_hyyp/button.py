@@ -11,6 +11,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.exceptions import ServiceValidationError
 
 from .const import DATA_COORDINATOR, DOMAIN, SERVICE_TRIGGER_AUTOMATION, ATTR_ARM_CODE, SERVICE_STAY_PROFILE_ARM
 from .coordinator import HyypDataUpdateCoordinator
@@ -118,13 +119,9 @@ class HyypStayArmButton(HyypPartitionEntity, ButtonEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError(f"Failed to arm  {self._attr_name}") from err
 
-        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] is None)):
-            await self.coordinator.async_request_refresh()
-
-        else:
-            raise HyypApiError(
-                f"Failed to push button {self._attr_name} failed with: {update_ok}"
-            )
+        await self.coordinator.async_request_refresh()
+        if (update_ok["status"] != "SUCCESS"):
+            raise ServiceValidationError("Cannot arm alarm. Check for violated zones or refresh, confirm and try again")
     
     async def perform_stay_profile_arm(self, arm_code: Any = None) -> None:
         """Service to per stay arm if code is not set in options."""
@@ -142,13 +139,9 @@ class HyypStayArmButton(HyypPartitionEntity, ButtonEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError(f"Failed to push button {self._attr_name}") from err
 
-        if (update_ok["status"] == "SUCCESS") or (update_ok["status"] == "FAILURE" and (update_ok["error"] is None)):
-            await self.coordinator.async_request_refresh()
-
-        else:
-            raise HyypApiError(
-                f"Failed to arm {self._attr_name} failed with: {update_ok}"
-            )
+        await self.coordinator.async_request_refresh()
+        if (update_ok["status"] != "SUCCESS"):
+            raise ServiceValidationError("Cannot arm alarm. Check for violated zones or refresh, confirm and try again")
 
 
 

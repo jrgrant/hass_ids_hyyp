@@ -11,6 +11,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.exceptions import ServiceValidationError
 
 from .const import ATTR_BYPASS_CODE, DATA_COORDINATOR, DOMAIN, SERVICE_BYPASS_ZONE
 from .coordinator import HyypDataUpdateCoordinator
@@ -117,7 +118,7 @@ class HyypSwitch(HyypPartitionEntity, SwitchEntity):
             await self.coordinator.async_request_refresh()
 
         elif update_ok["status"] == "PENDING":
-            raise HyypApiError(f"Code required to bypass zone {self._attr_name}")
+            raise ServiceValidationError(f"Zone: {self._attr_name} - IDS Server did not verify successful zone un-bypass. Please refresh and confirm or try again.")
 
         else:
             raise HyypApiError(
@@ -138,11 +139,12 @@ class HyypSwitch(HyypPartitionEntity, SwitchEntity):
         except (HTTPError, HyypApiError) as err:
             raise HyypApiError("Failed to turn on switch {self._attr_name}") from err
 
+        
         if update_ok["status"] == "SUCCESS":
             await self.coordinator.async_request_refresh()
 
         elif update_ok["status"] == "PENDING":
-            raise HyypApiError(f"Code required to bypass zone {self._attr_name}")
+            raise ServiceValidationError(f"Zone: {self._attr_name} - IDS Server did not verify successful zone bypass. Please refresh and confirm or try again.")
 
         else:
             raise HyypApiError(
@@ -165,6 +167,9 @@ class HyypSwitch(HyypPartitionEntity, SwitchEntity):
 
         if update_ok["status"] == "SUCCESS":
             await self.coordinator.async_request_refresh()
+            
+        elif update_ok["status"] == "PENDING":
+            raise ServiceValidationError(f"Zone: {self._attr_name} - IDS Server did not verify successful zone bypass. Please refresh and confirm or try again.")
 
         else:
             raise HyypApiError(
